@@ -4,10 +4,10 @@ The purpose of lab 1 is to
   * Introduce the basic concepts of programming: 
     * variables & types
     * if statements and basic boolean logic
-    * while loops
+    * loops
   
 Workshop content:
-  * Set up the environment: install the tools, buid & run hello world
+  * Set up the environment: install the tools, build & run hello world
         [Instructions to follow](https://code.visualstudio.com/docs/python/python-tutorial)
   * Hello, world
   * Hello, {name}
@@ -16,8 +16,8 @@ Workshop content:
     2. one attempt version
     3. introduce hints
     4. keep using until you get it
-  * introduce the debugger in each step, follow variables
-  * make the range [0,100]. How many attempts does it take to guess?
+  * introduce the debugger in each step, follow variables' content
+  * make the number range [0,100]. How many attempts does it take to guess?
 
 Homework, extra points:
   * Coin-toss game: you're given 3 attempts to guess a coin-toss result. 
