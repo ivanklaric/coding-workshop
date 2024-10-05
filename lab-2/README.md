@@ -4,8 +4,12 @@ The purpose of lab 1 is to
     * functions
   
 Workshop content:
-  * Rock, paper, sissors: introduce the game
-  * 
+  * Rock, paper, scissors: introduce the game
+    1. read user input, save it into a variable
+    2. generate computer's selection, save it into a variable (introduce functions here)
+    3. determine who won
+    4. add the fourth option: Glue - wins against paper & scissors, loses against rock (introduce lists here)
+    5. multiple rounds, keep score, best out of N
 
 **Homework: weather prediction game**
 
