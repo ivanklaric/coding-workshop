@@ -7,7 +7,7 @@ The purpose of lab 1 is to
     * loops
   
 Workshop content:
-  * Set up the environment: install the tools, build & run hello world
+  * Set up the environment: install the tools, build & run hello world  
         [Instructions to follow](https://code.visualstudio.com/docs/python/python-tutorial)
   * Hello, world
   * Hello, {name}
