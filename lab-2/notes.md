@@ -1,19 +1,18 @@
-***2. radionica***
+# 2. radionica
 
-Sazetak radionice:
+## Sazetak radionice:
  * Ponavljanje: [Hello world](../lab-1/hello_2.py) i [Pogadjanje brojeva](../lab-1/number_guess.py).
  * Nakon toga smo nadogradili igru pogadjanja brojeva tako da smo naucili koncept [while petlje](https://www.w3schools.com/python/python_while_loops.asp)
  * Potom smo programirali igru [Kamen, skare, i papir](./kamen_skare.py) u kojoj smo uveli i pojmove [listi](https://www.w3schools.com/python/python_lists.asp) i [funkcija](https://www.w3schools.com/python/python_functions.asp)
 
- Za zadacu predlazem isprogramirati igru pogadjanja vremenskih uvjeta. Opis igre:
+ Za zadacu predlazem isprogramirati igru pogadjanja vremenskih uvjeta. Opis igre u nastavku.
 
 
-
-**Igra predviđanja vremena**
+## Igra predviđanja vremena
 Pravila igre:
 Igra treba imati popis od najmanje 5 različitih vremenskih uvjeta (npr. Sunčano, Kišovito, Oblačno, Vjetrovito, Snježno).
 
-Na početku svakog kruga:
+### Na početku svakog kruga:
 * Igra nasumično odabire jedan od ovih uvjeta kao stvarno vrijeme.
 * Od igrača se traži da predvidi kakvo će biti vrijeme.
 * Nakon što igrač da svoje predviđanje:
@@ -27,7 +26,7 @@ Na početku svakog kruga:
 * Igra se treba odvijati kroz više krugova (vi odlučujete koliko).
 * Na kraju svih krugova, igra treba prikazati ukupan rezultat igrača.
 
-**Vaš kod treba uključivati:**
+### Vaš kod treba uključivati:
 * Funkciju za dobivanje igračevog predviđanja.
 * Funkciju za generiranje stvarnog vremena.
 * Funkciju za izračun bodova za svaki krug.
