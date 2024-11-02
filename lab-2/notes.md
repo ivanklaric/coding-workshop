@@ -1,4 +1,4 @@
-**2. radionica**
+***2. radionica***
 
 Sazetak radionice:
  * Ponavljanje: [Hello world](../lab-1/hello_2.py) i [Pogadjanje brojeva](../lab-1/number_guess.py).
@@ -7,10 +7,9 @@ Sazetak radionice:
 
  Za zadacu predlazem isprogramirati igru pogadjanja vremenskih uvjeta. Opis igre:
 
-I'll help translate this homework assignment into Croatian.
+
 
 **Igra predviđanja vremena**
-
 Pravila igre:
 Igra treba imati popis od najmanje 5 različitih vremenskih uvjeta (npr. Sunčano, Kišovito, Oblačno, Vjetrovito, Snježno).
 
@@ -28,7 +27,7 @@ Na početku svakog kruga:
 * Igra se treba odvijati kroz više krugova (vi odlučujete koliko).
 * Na kraju svih krugova, igra treba prikazati ukupan rezultat igrača.
 
-Vaša kod treba uključivati:
+**Vaš kod treba uključivati:**
 * Funkciju za dobivanje igračevog predviđanja.
 * Funkciju za generiranje stvarnog vremena.
 * Funkciju za izračun bodova za svaki krug.
