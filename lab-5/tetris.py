@@ -1,25 +1,15 @@
 import pygame
 import random
 
-# Initialize Pygame
-pygame.init()
-
-# Constants
 VELICINA_BLOKA = 30
 BROJ_KOLONA = 10
 BROJ_REDOVA = 20
 SIRINA_EKRANA = BROJ_KOLONA * VELICINA_BLOKA
 VISINA_EKRANA = BROJ_REDOVA * VELICINA_BLOKA
 
-# Colors
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 BLUE = (0, 0, 255)
-
-# Set up the game window
-screen = pygame.display.set_mode((SIRINA_EKRANA, VISINA_EKRANA))
-pygame.display.set_caption('Tetris')
-clock = pygame.time.Clock()
 
 OBLICI = [
     [[1, 1, 1, 1]],  # I
@@ -31,6 +21,10 @@ OBLICI = [
     [[0, 1, 1], [1, 1, 0]]   # Z
 ]
 
+pygame.init()
+screen = pygame.display.set_mode((SIRINA_EKRANA, VISINA_EKRANA))
+pygame.display.set_caption('Tetris')
+
 def napravi_polje():
     polje = []
     for i in range(BROJ_REDOVA):
@@ -40,10 +34,8 @@ def napravi_polje():
         polje.append(row)
     return polje
 
-def napravi_novi():
+def napravi_novi_oblik():
     oblik = OBLICI[random.randint(0, len(OBLICI) - 1)]
-
-    # Start piece in middle of top row
     pozicija_kolona = BROJ_KOLONA // 2
     pozicija_red = 0
     return oblik, pozicija_kolona, pozicija_red
@@ -86,50 +78,42 @@ def nacrtaj_stanje_igre(screen, polje, trenutni_oblik, pozicija_kolona, pozicija
                 pygame.draw.rect(screen, BLUE, (x, y, VELICINA_BLOKA, VELICINA_BLOKA))
     pygame.display.update()
     
-
-# Set up the game
 polje = napravi_polje()
-trenutni_oblik, pozicija_kolona, pozicija_red = napravi_novi()
+trenutni_oblik, pozicija_kolona, pozicija_red = napravi_novi_oblik()
 game_over = False
 
-# Game timing
-fall_speed = 500  # milliseconds
-last_fall_time = pygame.time.get_ticks()
+milisekundi_izmedju_padova = 500  # milliseconds
+zadnje_vrijeme_pada = pygame.time.get_ticks()
 
-while not game_over:
-    current_time = pygame.time.get_ticks()
-    delta_time = current_time - last_fall_time
-    
-    # Handle events
+while not game_over:   
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             exit()
         
         if event.type == pygame.KEYDOWN:
-            # Move left
             if event.key == pygame.K_LEFT:
                 if smije_biti_postavljen(polje, trenutni_oblik, pozicija_kolona - 1, pozicija_red):
                     pozicija_kolona -= 1
             
-            # Move right
             elif event.key == pygame.K_RIGHT:
                 if smije_biti_postavljen(polje, trenutni_oblik, pozicija_kolona + 1, pozicija_red):
                     pozicija_kolona += 1           
     
-    # Make piece fall
-    if delta_time > fall_speed:
+    # Upali gravitaciju
+    trenutno_vrijeme = pygame.time.get_ticks()
+    proslo_milisekundi = trenutno_vrijeme - zadnje_vrijeme_pada
+    if proslo_milisekundi > milisekundi_izmedju_padova:
         if smije_biti_postavljen(polje, trenutni_oblik, pozicija_kolona, pozicija_red + 1):
             pozicija_red += 1
         else:
             postavi_oblik(polje, trenutni_oblik, pozicija_kolona, pozicija_red)
-            trenutni_oblik, pozicija_kolona, pozicija_red = napravi_novi()
+            trenutni_oblik, pozicija_kolona, pozicija_red = napravi_novi_oblik()
             if not smije_biti_postavljen(polje, trenutni_oblik, pozicija_kolona, pozicija_red):
                 game_over = True
-        last_fall_time = current_time
+        zadnje_vrijeme_pada = trenutno_vrijeme
     
     # Draw everything
     nacrtaj_stanje_igre(screen, polje, trenutni_oblik, pozicija_kolona, pozicija_red)
-    clock.tick(60)
 
 # Game Over screen
 font = pygame.font.Font(None, 48)
