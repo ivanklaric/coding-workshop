@@ -4,10 +4,12 @@ import random
 VELICINA_BLOKA = 30
 BROJ_KOLONA = 10
 BROJ_REDOVA = 20
-SIRINA_EKRANA = BROJ_KOLONA * VELICINA_BLOKA
+SIRINA_POLJA = BROJ_KOLONA * VELICINA_BLOKA
+SIRINA_EKRANA = BROJ_KOLONA * VELICINA_BLOKA + 200
 VISINA_EKRANA = BROJ_REDOVA * VELICINA_BLOKA
 
 BLACK = (0, 0, 0)
+GREY = (50, 50, 50)
 WHITE = (255, 255, 255)
 BLUE = (0, 0, 255)
 RED = (255, 0, 0)
@@ -26,6 +28,7 @@ OBLICI = [
 ]
 
 pygame.init()
+font = pygame.font.Font(None, 24)
 screen = pygame.display.set_mode((SIRINA_EKRANA, VISINA_EKRANA))
 pygame.display.set_caption('Tetris')
 
@@ -68,7 +71,8 @@ def postavi_oblik(polje, oblik, pozicija_kolona, pozicija_red):
                 polje[pozicija_red + oblik_r][pozicija_kolona + oblik_k] = oblik[oblik_r][oblik_k]
 
 def nacrtaj_stanje_igre(screen, polje, trenutni_oblik, pozicija_kolona, pozicija_red):
-    screen.fill(BLACK)
+    screen.fill(GREY)
+    pygame.draw.rect(screen, BLACK , (0, 0, SIRINA_POLJA, VISINA_EKRANA))
     
     # Nacrtaj trenutni oblik
     for oblik_r in range(len(trenutni_oblik)):
@@ -87,6 +91,10 @@ def nacrtaj_stanje_igre(screen, polje, trenutni_oblik, pozicija_kolona, pozicija
                 x = polje_k * VELICINA_BLOKA
                 y = polje_r * VELICINA_BLOKA
                 pygame.draw.rect(screen, BOJE[boja], (x, y, VELICINA_BLOKA, VELICINA_BLOKA))
+
+    bodovi_text = font.render('Bodovi: ' + str(bodovi), True, WHITE)
+    screen.blit(bodovi_text, (320, 20))
+
     pygame.display.update()
 
 def rotiraj_oblik(oblik):
@@ -131,6 +139,7 @@ game_over = False
 
 milisekundi_izmedju_padova = 500  # milliseconds
 zadnje_vrijeme_pada = pygame.time.get_ticks()
+bodovi = 900
 
 while not game_over:   
     for event in pygame.event.get():
@@ -158,6 +167,10 @@ while not game_over:
     popunjeni_redak = nadji_popunjeni_redak(polje)
     if popunjeni_redak >= 0:
         polje = obrisi_redak(polje, popunjeni_redak)
+        bodovi += 100 + 50 * (bodovi // 1000)
+        milisekundi_izmedju_padova = 500 - 50 * (bodovi // 1000)
+        if milisekundi_izmedju_padova < 100:
+            milisekundi_izmedju_padova = 100
 
     # Upali gravitaciju
     trenutno_vrijeme = pygame.time.get_ticks()
@@ -176,8 +189,8 @@ while not game_over:
     nacrtaj_stanje_igre(screen, polje, trenutni_oblik, pozicija_kolona, pozicija_red)
 
 # Game Over screen
-font = pygame.font.Font(None, 48)
-game_over_text = font.render('Game Over!', True, WHITE)
+game_over_font = pygame.font.Font(None, 48)
+game_over_text = game_over_font.render('Game Over!', True, WHITE)
 screen.blit(game_over_text,
             (SIRINA_EKRANA // 2 - game_over_text.get_width() // 2,
                 VISINA_EKRANA // 2 - game_over_text.get_height() // 2))
