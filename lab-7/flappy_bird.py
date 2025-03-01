@@ -19,7 +19,7 @@ def napravi_stup(x):
     return {
         'x': x,
         'yg': random.randint(50,490),
-        'hole_height': 120,
+        'hole_height': 200,
         'width': 50
     }
 
@@ -48,6 +48,7 @@ gravitacija = 0.1
 impuls = -2.5
 
 # Main game loop
+score = 0
 speed = 1
 running = True
 while running:
@@ -69,6 +70,7 @@ while running:
         stupovi.append(napravi_stup(800))
     if stupovi[0]['x'] <= -50:
         stupovi = stupovi[1:]
+        score += 1
 
     ptica['y'] += ptica['speed']
     ptica['speed'] += gravitacija
@@ -79,15 +81,24 @@ while running:
         ptica['y'] = HEIGHT-15
         ptica['speed'] = 0
 
+    prvi_stup = stupovi[0]
+    ptica_rect = pygame.Rect(ptica['x'], ptica['y'], 35, 25)
+    gornja_cijev = (prvi_stup['x'], 0, prvi_stup['width'], prvi_stup['yg'])
+    donja_cijev = (prvi_stup['x'], prvi_stup['yg']+prvi_stup['hole_height'], prvi_stup['width'], HEIGHT-prvi_stup['yg']-prvi_stup['hole_height'])
+    if pygame.Rect.colliderect( ptica_rect, gornja_cijev) or pygame.Rect.colliderect(ptica_rect, donja_cijev):
+        running = False 
+
     # Nacrtaj scenu
     screen.fill((80, 163, 255))
     # Draw the score in the upper left corner
     # Nacrtaj stupove
     for stup in stupovi:
         nacrtaj_stup(screen, stup)
-    score_text = font.render('Score: XX', True, (0, 0, 0))
+    score_text = font.render('Score: ' + str(score), True, (0, 0, 0))
     screen.blit(score_text, (0,0))
-    nacrtaj_pticu(screen, ptica, slika_ptice)
+    slika_za_nacrtati = pygame.transform.rotate(slika_ptice, ptica['speed'] * (-5))
+        
+    nacrtaj_pticu(screen, ptica, slika_za_nacrtati)
     pygame.display.flip()
 
     # Cap the frame rate
