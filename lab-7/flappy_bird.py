@@ -19,7 +19,7 @@ def napravi_stup(x):
     return {
         'x': x,
         'yg': random.randint(50,490),
-        'hole_height': 60,
+        'hole_height': 120,
         'width': 50
     }
 
@@ -29,14 +29,23 @@ def nacrtaj_stup(screen, stup):
     # Onda, nacrtaj donji stup
     pygame.draw.rect(screen, BOJA_STUPOVA, (stup['x'], stup['yg'] + stup['hole_height'], stup['width'], HEIGHT-stup['yg'] - stup['hole_height']))
 
-def nacrtaj_pticu(screen, ptica):
-    pygame.draw.circle(screen, BOJA_PTICE, (ptica['x'], ptica['y']), 15)
+def ucitaj_sliku(filename, size=(40, 30)):
+    image = pygame.image.load(filename)
+    return pygame.transform.scale(image, size)
 
+
+def nacrtaj_pticu(screen, ptica, slika_ptice):
+    screen.blit(slika_ptice, (ptica['x'], ptica['y']))
+
+slika_ptice = ucitaj_sliku("lab-7/bird2.png")
 stupovi = [napravi_stup(250), napravi_stup(500), napravi_stup(750)]
 ptica = {
     'x': 20,
-    'y': HEIGHT//2-15
+    'y': HEIGHT//2-15,
+    'speed': 0
 }
+gravitacija = 0.1
+impuls = -2.5
 
 # Main game loop
 speed = 1
@@ -46,6 +55,11 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        if event.type == pygame.KEYDOWN:
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_SPACE]:
+                ptica['speed'] += impuls
+
 
     # Pomakni stupove u lijevo
     for stup in stupovi:
@@ -56,8 +70,16 @@ while running:
     if stupovi[0]['x'] <= -50:
         stupovi = stupovi[1:]
 
+    ptica['y'] += ptica['speed']
+    ptica['speed'] += gravitacija
+    if ptica['y'] < 15:
+        ptica['y'] = 15
+        ptica['speed'] = 0
+    if ptica['y'] > HEIGHT-15:
+        ptica['y'] = HEIGHT-15
+        ptica['speed'] = 0
 
-    # Drawing the scene
+    # Nacrtaj scenu
     screen.fill((80, 163, 255))
     # Draw the score in the upper left corner
     # Nacrtaj stupove
@@ -65,7 +87,7 @@ while running:
         nacrtaj_stup(screen, stup)
     score_text = font.render('Score: XX', True, (0, 0, 0))
     screen.blit(score_text, (0,0))
-    nacrtaj_pticu(screen, ptica)
+    nacrtaj_pticu(screen, ptica, slika_ptice)
     pygame.display.flip()
 
     # Cap the frame rate
