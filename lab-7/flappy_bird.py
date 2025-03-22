@@ -17,6 +17,10 @@ pygame.display.set_caption("Flappy bird")
 # Set up fonts
 font = pygame.font.SysFont('Arial', 24)
 
+pygame.mixer.music.load('lab-7/background.mp3')
+pygame.mixer.music.set_volume(0.3)
+pygame.mixer.music.play(-1)
+
 def napravi_stup(x):
     return {
         'x': x,
@@ -41,6 +45,8 @@ def nacrtaj_pticu(screen, ptica, slika_ptice):
 
 slika_ptice = ucitaj_sliku("lab-7/bird2.png")
 zvuk_krila = pygame.mixer.Sound("lab-7/woosh.mp3")
+scream = pygame.mixer.Sound("lab-7/scream.wav")
+
 stupovi = [napravi_stup(250), napravi_stup(500), napravi_stup(750)]
 ptica = {
     'x': 20,
@@ -54,43 +60,47 @@ impuls = -2.5
 score = 0
 speed = 1
 running = True
+game_over = False
 while running:
     # Handle events
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        if event.type == pygame.KEYDOWN:
-            keys = pygame.key.get_pressed()
-            if keys[pygame.K_SPACE]:
-                ptica['speed'] += impuls
-                zvuk_krila.play()
+        if not game_over:
+            if event.type == pygame.KEYDOWN:
+                keys = pygame.key.get_pressed()
+                if keys[pygame.K_SPACE]:
+                    ptica['speed'] += impuls
+                    zvuk_krila.play()
 
 
-    # Pomakni stupove u lijevo
-    for stup in stupovi:
-        stup['x'] -= speed
-    # Ako je prvi stup nestao s ekrana, makni ga i dodaj jedan stup na kraj
-    if stupovi[0]['x'] <= 50 and len(stupovi)<4:
-        stupovi.append(napravi_stup(800))
-    if stupovi[0]['x'] <= -50:
-        stupovi = stupovi[1:]
-        score += 1
+    if not game_over:
+        # Pomakni stupove u lijevo
+        for stup in stupovi:
+            stup['x'] -= speed
+        # Ako je prvi stup nestao s ekrana, makni ga i dodaj jedan stup na kraj
+        if stupovi[0]['x'] <= 50 and len(stupovi)<4:
+            stupovi.append(napravi_stup(800))
+        if stupovi[0]['x'] <= -50:
+            stupovi = stupovi[1:]
+            score += 1
 
-    ptica['y'] += ptica['speed']
-    ptica['speed'] += gravitacija
-    if ptica['y'] < 15:
-        ptica['y'] = 15
-        ptica['speed'] = 0
-    if ptica['y'] > HEIGHT-15:
-        ptica['y'] = HEIGHT-15
-        ptica['speed'] = 0
+        ptica['y'] += ptica['speed']
+        ptica['speed'] += gravitacija
+        if ptica['y'] < 15:
+            ptica['y'] = 15
+            ptica['speed'] = 0
+        if ptica['y'] > HEIGHT-15:
+            ptica['y'] = HEIGHT-15
+            ptica['speed'] = 0
 
-    prvi_stup = stupovi[0]
-    ptica_rect = pygame.Rect(ptica['x'], ptica['y'], 35, 25)
-    gornja_cijev = (prvi_stup['x'], 0, prvi_stup['width'], prvi_stup['yg'])
-    donja_cijev = (prvi_stup['x'], prvi_stup['yg']+prvi_stup['hole_height'], prvi_stup['width'], HEIGHT-prvi_stup['yg']-prvi_stup['hole_height'])
-    if pygame.Rect.colliderect( ptica_rect, gornja_cijev) or pygame.Rect.colliderect(ptica_rect, donja_cijev):
-        running = False 
+        prvi_stup = stupovi[0]
+        ptica_rect = pygame.Rect(ptica['x'], ptica['y'], 35, 25)
+        gornja_cijev = (prvi_stup['x'], 0, prvi_stup['width'], prvi_stup['yg'])
+        donja_cijev = (prvi_stup['x'], prvi_stup['yg']+prvi_stup['hole_height'], prvi_stup['width'], HEIGHT-prvi_stup['yg']-prvi_stup['hole_height'])
+        if pygame.Rect.colliderect( ptica_rect, gornja_cijev) or pygame.Rect.colliderect(ptica_rect, donja_cijev):
+            game_over = True
+            scream.play()
 
     # Nacrtaj scenu
     screen.fill((80, 163, 255))
@@ -101,8 +111,11 @@ while running:
     score_text = font.render('Score: ' + str(score), True, (0, 0, 0))
     screen.blit(score_text, (0,0))
     slika_za_nacrtati = pygame.transform.rotate(slika_ptice, ptica['speed'] * (-5))
-        
     nacrtaj_pticu(screen, ptica, slika_za_nacrtati)
+
+    if game_over:
+        game_over_text = font.render('Game Over!', True, (0, 0, 0))
+        screen.blit(game_over_text, (WIDTH // 2 - game_over_text.get_width() // 2, HEIGHT // 2))
     pygame.display.flip()
 
     # Cap the frame rate
