@@ -6,8 +6,8 @@ We're loosely following the content of the book [Python Crash Course](https://g.
 Labs:
   * [Lab 1](/lab-1): Hello world, Numbers guessing game
   * [Lab 2](/lab-2): Rock, paper, scissors 
-  * [Lab 3](/lab-3): Tic-tac-toe
-  * Lab 4: Hangman
-  * Labs 5 & 6: Snake (or Tetris)
-  * Labs 7 & 8: Flappy bird, space invaders
-  * Labs 9 & 10: Temple run
+  * [Labs 3 & 4](/lab-4): Tic-tac-toe
+  * [Labs 5 & 6](/lab-6): Tetris
+  * [Labs 6 & 7](/lab-7): Space Shooter
+  * [Labs 7 & 8](/lab-7): Flappy bird
+  * [Labs 8, 9, 10](/lab-8): Super Mario
