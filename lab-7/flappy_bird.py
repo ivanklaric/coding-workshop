@@ -29,6 +29,13 @@ def napravi_stup(x):
         'width': 50
     }
 
+def napravi_oblak(x):
+    return {
+        'x': x,
+        'y': random.randint(0, HEIGHT-100),
+        'speed': random.randint(15, 20) / 10
+    }
+
 def nacrtaj_stup(screen, stup):
     # Prvo, nacrtaj gornji stup
     pygame.draw.rect(screen, BOJA_STUPOVA, (stup['x'], 0, stup['width'], stup['yg']))
@@ -43,11 +50,16 @@ def ucitaj_sliku(filename, size=(40, 30)):
 def nacrtaj_pticu(screen, ptica, slika_ptice):
     screen.blit(slika_ptice, (ptica['x'], ptica['y']))
 
+def nacrtaj_oblak(screen, oblak, slika):
+    screen.blit(slika, (oblak['x'], oblak['y']))
+
 slika_ptice = ucitaj_sliku("lab-7/bird2.png")
 zvuk_krila = pygame.mixer.Sound("lab-7/woosh.mp3")
 scream = pygame.mixer.Sound("lab-7/scream.wav")
+slika_oblaka = ucitaj_sliku("lab-7/big-cloud.png")
 
 stupovi = [napravi_stup(250), napravi_stup(500), napravi_stup(750)]
+oblaci = [napravi_oblak(100), napravi_oblak(200), napravi_oblak(300), napravi_oblak(500), napravi_oblak(600), napravi_oblak(700)]
 ptica = {
     'x': 20,
     'y': HEIGHT//2-15,
@@ -75,9 +87,19 @@ while running:
 
 
     if not game_over:
+        # Pomakni oblake u lijevo
+        for oblak in oblaci:
+            oblak['x'] -= oblak['speed']
         # Pomakni stupove u lijevo
         for stup in stupovi:
             stup['x'] -= speed
+        
+        # Ako je prvi oblak nestao s ekrana, makni ga i dodaj jedan stup na kraj
+        if oblaci[0]['x'] <= 50 and len(oblaci)<7:
+            oblaci.append(napravi_oblak(800))
+        if oblaci[0]['x'] <= -50:
+            oblaci = oblaci[1:] 
+
         # Ako je prvi stup nestao s ekrana, makni ga i dodaj jedan stup na kraj
         if stupovi[0]['x'] <= 50 and len(stupovi)<4:
             stupovi.append(napravi_stup(800))
@@ -104,7 +126,9 @@ while running:
 
     # Nacrtaj scenu
     screen.fill((80, 163, 255))
-    # Draw the score in the upper left corner
+    # Nacrtaj oblake
+    for oblak in oblaci:
+        nacrtaj_oblak(screen, oblak, slika_oblaka)
     # Nacrtaj stupove
     for stup in stupovi:
         nacrtaj_stup(screen, stup)
