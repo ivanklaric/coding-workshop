@@ -112,7 +112,7 @@ def detektiraj_sudare(metci, neprijatelji):
         for j in range(len(neprijatelji)):
             if preklapaju_li_se( metci[i], neprijatelji[j]):
                 metci[i]['x'] = 1000
-                neprijatelji[j]['x'] = 1000
+                neprijatelji[j]['x'] = -100
 
 zvijezde = []
 for i in range(100):
