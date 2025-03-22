@@ -4,6 +4,8 @@ import sys
 
 # Initialize Pygame
 pygame.init()
+pygame.mixer.init()
+
 
 # Set up the game window
 WIDTH, HEIGHT = 800, 600
@@ -38,6 +40,7 @@ def nacrtaj_pticu(screen, ptica, slika_ptice):
     screen.blit(slika_ptice, (ptica['x'], ptica['y']))
 
 slika_ptice = ucitaj_sliku("lab-7/bird2.png")
+zvuk_krila = pygame.mixer.Sound("lab-7/woosh.mp3")
 stupovi = [napravi_stup(250), napravi_stup(500), napravi_stup(750)]
 ptica = {
     'x': 20,
@@ -60,6 +63,7 @@ while running:
             keys = pygame.key.get_pressed()
             if keys[pygame.K_SPACE]:
                 ptica['speed'] += impuls
+                zvuk_krila.play()
 
 
     # Pomakni stupove u lijevo
