@@ -6,8 +6,7 @@ from mario_levels import *
 SCREEN_WIDTH, SCREEN_HEIGHT = 800, 512
 BROJ_REDAKA, BROJ_STUPACA = 32, 50
 
-# polje = inicijaliziraj_polje(BROJ_REDAKA, BROJ_STUPACA)
-polje = first_level()
+polje = second_level()
 
 pygame.init()
 font = pygame.font.SysFont('Arial', 24)
