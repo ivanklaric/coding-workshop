@@ -32,9 +32,9 @@ def napravi_ravnicu(polje):
 def nacrtaj_pravkutnik_polja(screen, slika, redak, kolona):
     nacrtaj_sliku(screen, kolona * 16, redak * 16, slika)
 
-def nacrtaj_polje(screen, lista_slika, polje):
+def nacrtaj_polje(screen, lista_slika, polje, kolona_pocetka):
     for broj_retka in range(len(polje)):
         red = polje[broj_retka]
-        for broj_kolone in range(len(red)):
+        for broj_kolone in range(kolona_pocetka, len(red)):
             slika_za_nacrtat =  polje[broj_retka][broj_kolone]
-            nacrtaj_pravkutnik_polja(screen, lista_slika[slika_za_nacrtat], broj_retka, broj_kolone)
+            nacrtaj_pravkutnik_polja(screen, lista_slika[slika_za_nacrtat], broj_retka, broj_kolone-kolona_pocetka)
