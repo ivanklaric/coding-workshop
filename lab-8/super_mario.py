@@ -16,7 +16,6 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 score = 0
 running = True
 
-
 while running:
     # Handle events
     for event in pygame.event.get():
