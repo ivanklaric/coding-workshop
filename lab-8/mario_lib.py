@@ -1,11 +1,20 @@
 import pygame
 
-def ucitaj_sliku(filename, size=(40, 30)):
+def ucitaj_sve_slike():
+    lista = []
+    lista.append(None)
+    lista.append(ucitaj_sliku('lab-8/ground-tile.png'))
+    lista.append(ucitaj_sliku('lab-8/grassy-tile.png'))
+    lista.append(ucitaj_sliku('lab-8/question-box.png'))
+    return lista
+
+def ucitaj_sliku(filename, size=(16, 16)):
     image = pygame.image.load(filename)
     return pygame.transform.scale(image, size)
 
 def nacrtaj_sliku(screen, x, y, slika):
-    screen.blit(slika, (x, y))
+    if slika != None:
+        screen.blit(slika, (x, y))
 
 def inicijaliziraj_polje(broj_redaka, broj_stupaca):
     polje = []
@@ -20,12 +29,12 @@ def napravi_ravnicu(polje):
         polje[-1][kolona] = 1
     return polje
 
-def nacrtaj_pravkutnik_polja(screen, boja, redak, kolona):
-    pygame.draw.rect(screen, boja, ( kolona * 16, redak * 16, 16, 16 ))
+def nacrtaj_pravkutnik_polja(screen, slika, redak, kolona):
+    nacrtaj_sliku(screen, kolona * 16, redak * 16, slika)
 
-def nacrtaj_polje(screen, polje):
+def nacrtaj_polje(screen, lista_slika, polje):
     for broj_retka in range(len(polje)):
         red = polje[broj_retka]
         for broj_kolone in range(len(red)):
-            if polje[broj_retka][broj_kolone] == 1:
-                nacrtaj_pravkutnik_polja(screen, 'brown', broj_retka, broj_kolone)
+            slika_za_nacrtat =  polje[broj_retka][broj_kolone]
+            nacrtaj_pravkutnik_polja(screen, lista_slika[slika_za_nacrtat], broj_retka, broj_kolone)
