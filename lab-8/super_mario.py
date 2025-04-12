@@ -6,6 +6,7 @@ from character_lib import *
 
 SCREEN_WIDTH, SCREEN_HEIGHT = 800, 512
 BROJ_REDAKA, BROJ_STUPACA = 32, 50
+GRAVITACIJA = .2
 
 polje = second_level()
 
@@ -16,7 +17,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 score = 0
 running = True
 lista_slika = ucitaj_sve_slike()
-mario = initialize_character(100, 100, 3, 0, 10, 'lab-8/mario.png')
+mario = initialize_character(100, 100, 0, 0, 10, 'lab-8/mario.png')
 kolona_pocetka = 0
 
 while running:
@@ -26,28 +27,26 @@ while running:
             running = False
 
     keys = pygame.key.get_pressed()
+    mario['speed_x'] = 0
     if keys[pygame.K_LEFT]:
-        mario['x'] -= mario['speed_x']
+        mario['speed_x'] = -4
     if keys[pygame.K_RIGHT]:
-        mario['x'] += mario['speed_x']
-            
-    if mario['x'] > 400:
-        mario['x'] = 400
-        kolona_pocetka += 1
-    if mario['x'] < 50:
-        mario['x'] = 50
-        kolona_pocetka -= 1
+        mario['speed_x'] = 4
+
+    # upali gravitaciju
+    mario['speed_y'] += GRAVITACIJA
+    mario['y'] += mario['speed_y']
+    mario['x'] += mario['speed_x']
 
     screen.fill((80, 163, 255))
  
     score_text = font.render('Score: ' + str(score), True, (0, 0, 0))
     screen.blit(score_text, (0,0))
-
-    draw_character(screen, mario)
-
     nacrtaj_polje(screen, lista_slika, polje, kolona_pocetka)
+    
+    draw_character(screen, mario)    
+    
     pygame.display.flip()
-
     # Cap the frame rate
     pygame.time.Clock().tick(60)
 
