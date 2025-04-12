@@ -57,6 +57,17 @@ while running:
         mario['y'] += mario['speed_y']
     else:
         mario['speed_y'] = 0
+        (mario_row, mario_col) = what_row_col_is_character_in(mario, kolona_pocetka)
+        if mario_row > 1:
+            if polje[mario_row-1][mario_col] == 3:
+                polje[mario_row-1][mario_col] = 4
+            if polje[mario_row-1][mario_col+1] == 3:
+                polje[mario_row-1][mario_col+1] = 4
+            if polje[mario_row-1][mario_col-1] == 3:
+                polje[mario_row-1][mario_col-1] = 4
+
+
+
 
 
     screen.fill((80, 163, 255))

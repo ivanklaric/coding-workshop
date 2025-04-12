@@ -52,4 +52,4 @@ def generiraj_rectanglove_polja(polje, kolona_pocetka):
 def what_row_col_is_character_in(character, kolona_pocetka):
     row = character['y'] // 16
     col = kolona_pocetka + character['x'] // 16
-    return (row, col)
+    return (int(row), int(col))
