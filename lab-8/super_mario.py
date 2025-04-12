@@ -32,9 +32,12 @@ while running:
         mario['speed_x'] = -4
     if keys[pygame.K_RIGHT]:
         mario['speed_x'] = 4
+    if keys[pygame.K_SPACE]:
+        mario['speed_y'] = -5
 
     # upali gravitaciju
-    mario['speed_y'] += GRAVITACIJA
+    if can_character_move_to(mario, polje, kolona_pocetka, mario['x'], mario['y'] + GRAVITACIJA):
+        mario['speed_y'] += GRAVITACIJA
     mario_next_x = mario['x'] + mario['speed_x']
     mario_next_y = mario['y'] + mario['speed_y']
 
