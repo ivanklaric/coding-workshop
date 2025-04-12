@@ -15,6 +15,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 score = 0
 running = True
 lista_slika = ucitaj_sve_slike()
+slika_maria = ucitaj_sliku('lab-8/mario.png')
 kolona_pocetka = 0
 
 while running:
@@ -34,6 +35,8 @@ while running:
  
     score_text = font.render('Score: ' + str(score), True, (0, 0, 0))
     screen.blit(score_text, (0,0))
+
+    nacrtaj_sliku(screen, 100, 100, slika_maria)
 
     nacrtaj_polje(screen, lista_slika, polje, kolona_pocetka)
     pygame.display.flip()
