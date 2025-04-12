@@ -17,7 +17,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 score = 0
 running = True
 lista_slika = ucitaj_sve_slike()
-mario = initialize_character(100, 100, 0, 0, 5, 'lab-8/mario.png')
+mario = initialize_character(100, 100, 0, 0, 3, 'lab-8/mario.png')
 kolona_pocetka = 0
 
 while running:
@@ -33,12 +33,15 @@ while running:
     if keys[pygame.K_RIGHT]:
         mario['speed_x'] = 4
     if keys[pygame.K_SPACE]:
-        if mario['speed_y'] == 0:
-            mario['speed_y'] = -mario['jump_impulse']
+        mario['speed_y'] -= mario['jump_impulse']
 
     # upali gravitaciju
     if can_character_move_to(mario, polje, kolona_pocetka, mario['x'], mario['y'] + GRAVITACIJA):
         mario['speed_y'] += GRAVITACIJA
+        mario['jump_impulse'] = 0
+    else:
+        mario['jump_impulse'] = 3
+    
     mario_next_x = mario['x'] + mario['speed_x']
     mario_next_y = mario['y'] + mario['speed_y']
 
