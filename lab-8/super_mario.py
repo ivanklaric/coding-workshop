@@ -11,7 +11,7 @@ polje = second_level()
 pygame.init()
 font = pygame.font.SysFont('Arial', 24)
 pygame.display.set_caption("Super Mario!")
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))     
 score = 0
 running = True
 lista_slika = ucitaj_sve_slike()
