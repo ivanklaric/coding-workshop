@@ -16,7 +16,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 score = 0
 running = True
 lista_slika = ucitaj_sve_slike()
-mario = initialize_character(100, 100, 0, 0, 10, 'lab-8/mario.png')
+mario = initialize_character(100, 100, 3, 0, 10, 'lab-8/mario.png')
 kolona_pocetka = 0
 
 while running:
@@ -24,13 +24,19 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        if event.type == pygame.KEYDOWN:
-            keys = pygame.key.get_pressed()
-            if keys[pygame.K_LEFT]:
-                kolona_pocetka -= 1
-            if keys[pygame.K_RIGHT]:
-                kolona_pocetka += 1
+
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_LEFT]:
+        mario['x'] -= mario['speed_x']
+    if keys[pygame.K_RIGHT]:
+        mario['x'] += mario['speed_x']
             
+    if mario['x'] > 400:
+        mario['x'] = 400
+        kolona_pocetka += 1
+    if mario['x'] < 50:
+        mario['x'] = 50
+        kolona_pocetka -= 1
 
     screen.fill((80, 163, 255))
  
