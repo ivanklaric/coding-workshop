@@ -35,8 +35,15 @@ while running:
 
     # upali gravitaciju
     mario['speed_y'] += GRAVITACIJA
-    mario['y'] += mario['speed_y']
-    mario['x'] += mario['speed_x']
+    mario_next_x = mario['x'] + mario['speed_x']
+    mario_next_y = mario['y'] + mario['speed_y']
+
+    if can_character_move_to(mario, polje, kolona_pocetka, mario_next_x, mario_next_y):
+        mario['y'] += mario['speed_y']
+        mario['x'] += mario['speed_x']
+    else:
+        mario['speed_x'] = 0
+        mario['speed_y'] = 0
 
     screen.fill((80, 163, 255))
  

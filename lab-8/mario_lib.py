@@ -38,3 +38,12 @@ def nacrtaj_polje(screen, lista_slika, polje, kolona_pocetka):
         for broj_kolone in range(kolona_pocetka, len(red)):
             slika_za_nacrtat =  polje[broj_retka][broj_kolone]
             nacrtaj_pravkutnik_polja(screen, lista_slika[slika_za_nacrtat], broj_retka, broj_kolone-kolona_pocetka)
+
+def generiraj_rectanglove_polja(polje, kolona_pocetka):
+    ret = []
+    for broj_retka in range(len(polje)):
+        red = polje[broj_retka]
+        for broj_kolone in range(kolona_pocetka, len(red)):
+            if polje[broj_retka][broj_kolone] > 0:
+                ret.append(pygame.Rect(broj_kolone*16, broj_retka*16, 16, 16))
+    return ret
