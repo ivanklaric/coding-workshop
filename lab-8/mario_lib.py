@@ -48,3 +48,8 @@ def generiraj_rectanglove_polja(polje, kolona_pocetka):
             if polje[broj_retka][broj_kolone] > 0:
                 ret.append(pygame.Rect(broj_kolone*16, broj_retka*16, 16, 16))
     return ret
+
+def what_row_col_is_character_in(character, kolona_pocetka):
+    row = character['y'] // 16
+    col = kolona_pocetka + character['x'] // 16
+    return (row, col)

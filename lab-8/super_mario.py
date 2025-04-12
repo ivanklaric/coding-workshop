@@ -42,15 +42,22 @@ while running:
     else:
         mario['jump_impulse'] = 3
     
+    
+
     mario_next_x = mario['x'] + mario['speed_x']
     mario_next_y = mario['y'] + mario['speed_y']
 
-    if can_character_move_to(mario, polje, kolona_pocetka, mario_next_x, mario_next_y):
-        mario['y'] += mario['speed_y']
+    if can_character_move_to(mario, polje, kolona_pocetka, mario_next_x, mario['y']):
         mario['x'] += mario['speed_x']
     else:
         mario['speed_x'] = 0
+
+    
+    if can_character_move_to(mario, polje, kolona_pocetka, mario['x'], mario_next_y):
+        mario['y'] += mario['speed_y']
+    else:
         mario['speed_y'] = 0
+
 
     screen.fill((80, 163, 255))
  
