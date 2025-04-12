@@ -16,7 +16,6 @@ def draw_character(screen, character):
     nacrtaj_sliku(screen, character['x'], character['y'], character['picture'])
 
 def can_character_move_to(character, level, kolona_pocetka, next_x, next_y):
-
     character_rect = pygame.Rect(next_x, next_y, character['width'], character['height'])
     level_rects = generiraj_rectanglove_polja(level, kolona_pocetka)
     if character_rect.collidelist(level_rects) != -1:
