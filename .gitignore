@@ -2,3 +2,4 @@
 /.venv
 lab-4/notes.md~
 *.pyc
+.DS_Store
