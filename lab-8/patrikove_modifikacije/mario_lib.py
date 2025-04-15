@@ -3,10 +3,10 @@ import pygame
 def ucitaj_sve_slike():
     lista = []
     lista.append(None)
-    lista.append(ucitaj_sliku('lab-8/ground-tile.png'))
-    lista.append(ucitaj_sliku('lab-8/grassy-tile.png'))
-    lista.append(ucitaj_sliku('lab-8/question-box.png'))
-    lista.append(ucitaj_sliku('lab-8/ground-tile.png'))
+    lista.append(ucitaj_sliku('lab-8/patrikove_modifikacije/ground-tile.png'))
+    lista.append(ucitaj_sliku('lab-8/patrikove_modifikacije/grassy-tile.png'))
+    lista.append(ucitaj_sliku('lab-8/patrikove_modifikacije/question-box.png'))
+    lista.append(ucitaj_sliku('lab-8/patrikove_modifikacije/broken-question-box.png'))
     return lista
 
 def ucitaj_sliku(filename, size=(16, 16)):

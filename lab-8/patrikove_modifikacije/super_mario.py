@@ -6,7 +6,8 @@ from character_lib import *
 
 SCREEN_WIDTH, SCREEN_HEIGHT = 800, 512
 BROJ_REDAKA, BROJ_STUPACA = 32, 50
-GRAVITACIJA = .2
+GRAVITACIJA = 0.2
+promjena_u_mogućnosti_pomicanja_charactera = True
 
 polje = second_level()
 
@@ -41,8 +42,6 @@ while running:
         mario['jump_impulse'] = 0
     else:
         mario['jump_impulse'] = 3
-    
-    
 
     mario_next_x = mario['x'] + mario['speed_x']
     mario_next_y = mario['y'] + mario['speed_y']
@@ -51,12 +50,19 @@ while running:
         mario['x'] += mario['speed_x']
     else:
         mario['speed_x'] = 0
+        if promjena_u_mogućnosti_pomicanja_charactera != can_character_move_to(mario, polje, kolona_pocetka, mario_next_x, mario['y']):
+            mario['speed_y'] = 0
+        else:
+            promjena_u_mogućnosti_pomicanja_charactera = can_character_move_to(mario, polje, kolona_pocetka, mario_next_x, mario['y'])
 
-    
     if can_character_move_to(mario, polje, kolona_pocetka, mario['x'], mario_next_y):
         mario['y'] += mario['speed_y']
     else:
         mario['speed_y'] = 0
+        if promjena_u_mogućnosti_pomicanja_charactera != can_character_move_to(mario, polje, kolona_pocetka, mario['x'], mario_next_y):
+            mario['speed_x'] = 0
+        else:
+            promjena_u_mogućnosti_pomicanja_charactera = can_character_move_to(mario, polje, kolona_pocetka, mario['x'], mario_next_y)
         (mario_row, mario_col) = what_row_col_is_character_in(mario, kolona_pocetka)
         if mario_row > 1:
             if polje[mario_row-1][mario_col] == 3:
@@ -65,10 +71,6 @@ while running:
                 polje[mario_row-1][mario_col+1] = 4
             if polje[mario_row-1][mario_col-1] == 3:
                 polje[mario_row-1][mario_col-1] = 4
-
-
-
-
 
     screen.fill((80, 163, 255))
  
@@ -81,7 +83,6 @@ while running:
     pygame.display.flip()
     # Cap the frame rate
     pygame.time.Clock().tick(60)
-
 
 # Quit Pygame
 pygame.quit()
