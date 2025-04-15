@@ -6,7 +6,7 @@ from character_lib import *
 
 SCREEN_WIDTH, SCREEN_HEIGHT = 800, 512
 BROJ_REDAKA, BROJ_STUPACA = 32, 50
-GRAVITACIJA = 0.2
+GRAVITACIJA = .2
 
 polje = second_level()
 
@@ -41,6 +41,8 @@ while running:
         mario['jump_impulse'] = 0
     else:
         mario['jump_impulse'] = 3
+    
+    
 
     mario_next_x = mario['x'] + mario['speed_x']
     mario_next_y = mario['y'] + mario['speed_y']
@@ -50,6 +52,7 @@ while running:
     else:
         mario['speed_x'] = 0
 
+    
     if can_character_move_to(mario, polje, kolona_pocetka, mario['x'], mario_next_y):
         mario['y'] += mario['speed_y']
     else:
@@ -63,6 +66,10 @@ while running:
             if polje[mario_row-1][mario_col-1] == 3:
                 polje[mario_row-1][mario_col-1] = 4
 
+
+
+
+
     screen.fill((80, 163, 255))
  
     score_text = font.render('Score: ' + str(score), True, (0, 0, 0))
@@ -74,6 +81,7 @@ while running:
     pygame.display.flip()
     # Cap the frame rate
     pygame.time.Clock().tick(60)
+
 
 # Quit Pygame
 pygame.quit()
