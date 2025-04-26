@@ -13,14 +13,15 @@ def initialize_character(x, y, speed_x, speed_y, jump_impulse, picture_filename,
         'speed_y': speed_y,
         'jump_impulse': jump_impulse,
         'state': STATE_STANDING,
-        'picture': ucitaj_sliku(picture_filename),
-        'jumping_picture': ucitaj_sliku(jumping_picture),
+        'picture': ucitaj_sliku(picture_filename,(height,width)),
+        'jumping_picture': ucitaj_sliku(jumping_picture,(height,width)),
         'height': height,
-        'width': width
+        'width': width,
+        'walking_last_updated':0
     }
     walking_animation = []
     for picture_filename in walking_pictures:
-        walking_animation.append(ucitaj_sliku(picture_filename))
+        walking_animation.append(ucitaj_sliku(picture_filename,(height,width)))
     ret['walking_pictures'] = walking_animation
     ret['walking_picture_index'] = 0
     return ret
