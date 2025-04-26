@@ -28,15 +28,17 @@ while running:
 
     keys = pygame.key.get_pressed()
     mario['speed_x'] = 0
-    mario['state'] = STATE_STANDING
     if keys[pygame.K_LEFT]:
         mario['speed_x'] = -4
-        mario['state'] = STATE_WALKING
     if keys[pygame.K_RIGHT]:
         mario['speed_x'] = 4
-        mario['state'] = STATE_WALKING
     if keys[pygame.K_SPACE]:
         mario['speed_y'] -= mario['jump_impulse']
+
+    mario['state'] = STATE_STANDING
+    if mario['speed_x'] != 0:
+        mario['state'] = STATE_WALKING
+    if mario['speed_y'] != 0:
         mario['state'] = STATE_JUMP
 
     # upali gravitaciju

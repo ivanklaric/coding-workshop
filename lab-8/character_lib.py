@@ -22,6 +22,7 @@ def initialize_character(x, y, speed_x, speed_y, jump_impulse, picture_filename,
     for picture_filename in walking_pictures:
         walking_animation.append(ucitaj_sliku(picture_filename))
     ret['walking_pictures'] = walking_animation
+    ret['walking_picture_index'] = 0
     return ret
 
 
@@ -30,12 +31,18 @@ def draw_character(screen, character):
     if character['speed_x'] < 0:
         flip = True
     if character['state'] == STATE_STANDING:
+        character['walking_last_updated'] = 0
         nacrtaj_sliku(screen, character['x'], character['y'], character['picture'])
     elif character['state'] == STATE_WALKING:
-        nacrtaj_sliku(screen, character['x'], character['y'], character['walking_pictures'][0],flip)
-    
+        # move the animattion to the next image if more than 100ms passed
+        if pygame.time.get_ticks()-character['walking_last_updated'] > 50:
+            character['walking_picture_index'] = (character['walking_picture_index'] + 1) % len(character['walking_pictures'])
+            character['walking_last_updated'] = pygame.time.get_ticks()
+        nacrtaj_sliku(screen, character['x'], character['y'], character['walking_pictures'][character['walking_picture_index']],flip)        
     elif character['state'] == STATE_JUMP:
+        character['walking_last_updated'] = 0
         nacrtaj_sliku(screen, character['x'], character['y'], character['jumping_picture'],flip)
+    
 
 def can_character_move_to(character, level, kolona_pocetka, next_x, next_y):
     character_rect = pygame.Rect(next_x, next_y, character['width'], character['height'])
