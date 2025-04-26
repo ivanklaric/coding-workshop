@@ -54,20 +54,37 @@ while running:
     if can_character_move_to(mario, polje, kolona_pocetka, mario_next_x, mario['y']):
         mario['x'] += mario['speed_x']
     else:
+        (mario_row, mario_col) = what_row_col_is_character_in(mario, kolona_pocetka)
+        if polje[mario_row][mario_col+1] == 5 and mario['speed_x'] > 0:
+            score += 1
+            polje[mario_row][mario_col+1] = 0
+        if polje[mario_row][mario_col-1] == 5 and mario['speed_x'] < 0:
+            score += 1
+            polje[mario_row][mario_col-1] = 0
         mario['speed_x'] = 0
 
     if can_character_move_to(mario, polje, kolona_pocetka, mario['x'], mario_next_y):
         mario['y'] += mario['speed_y']
     else:
-        mario['speed_y'] = 0
         (mario_row, mario_col) = what_row_col_is_character_in(mario, kolona_pocetka)
-        if mario_row > 1:
+        if mario_row > 1 and mario['speed_y'] < 0:
+            # check for questionmark boxes
             if polje[mario_row-1][mario_col] == 3:
                 polje[mario_row-1][mario_col] = 4
             if polje[mario_row-1][mario_col+1] == 3:
                 polje[mario_row-1][mario_col+1] = 4
             if polje[mario_row-1][mario_col-1] == 3:
                 polje[mario_row-1][mario_col-1] = 4
+            # check for coins
+            if polje[mario_row-1][mario_col] == 5:
+                score += 1
+                polje[mario_row-1][mario_col] = 0
+        elif mario['speed_y'] > 0:
+            if polje[mario_row+1][mario_col] == 5:
+                score += 1
+                polje[mario_row+1][mario_col] = 0
+        mario['speed_y'] = 0
+
 
     screen.fill((80, 163, 255))
  
