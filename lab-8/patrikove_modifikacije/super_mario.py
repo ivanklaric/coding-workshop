@@ -1,5 +1,5 @@
 import pygame
-import sys
+import sys, time
 from mario_lib import *
 from mario_levels import *
 from character_lib import *
@@ -9,7 +9,7 @@ BROJ_REDAKA, BROJ_STUPACA = 32, 50
 GRAVITACIJA = 0.2
 promjena_u_mogućnosti_pomicanja_charactera = True
 
-polje = second_level()
+polje = first_level()
 
 pygame.init()
 font = pygame.font.SysFont('Arial', 24)
@@ -18,7 +18,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 score = 0
 running = True
 lista_slika = ucitaj_sve_slike()
-mario = initialize_character(100, 100, 0, 0, 3, 'lab-8/mario.png')
+mario = initialize_character(96, 160, True, 0, 0, 3, 'lab-8/mario.png')
 kolona_pocetka = 0
 
 while running:
@@ -37,9 +37,9 @@ while running:
         mario['speed_y'] -= mario['jump_impulse']
 
     # upali gravitaciju
-    if can_character_move_to(mario, polje, kolona_pocetka, mario['x'], mario['y'] + GRAVITACIJA):
-        mario['speed_y'] += GRAVITACIJA
-        mario['jump_impulse'] = 0
+    #if can_character_move_to(mario, polje, kolona_pocetka, mario['x'], mario['y'] + GRAVITACIJA):
+        #mario['speed_y'] += GRAVITACIJA
+        #mario['jump_impulse'] = 0
     else:
         mario['jump_impulse'] = 3
 
@@ -50,19 +50,20 @@ while running:
         mario['x'] += mario['speed_x']
     else:
         mario['speed_x'] = 0
-        if promjena_u_mogućnosti_pomicanja_charactera != can_character_move_to(mario, polje, kolona_pocetka, mario_next_x, mario['y']):
+        if mario['speed_y'] < 0:
             mario['speed_y'] = 0
-        else:
-            promjena_u_mogućnosti_pomicanja_charactera = can_character_move_to(mario, polje, kolona_pocetka, mario_next_x, mario['y'])
+        #if promjena_u_mogućnosti_pomicanja_charactera != can_character_move_to(mario, polje, kolona_pocetka, mario_next_x, mario['y']):
+            #mario['speed_y'] = 0
+        #else:
+            #promjena_u_mogućnosti_pomicanja_charactera = can_character_move_to(mario, polje, kolona_pocetka, mario_next_x, mario['y'])
 
     if can_character_move_to(mario, polje, kolona_pocetka, mario['x'], mario_next_y):
         mario['y'] += mario['speed_y']
     else:
-        mario['speed_y'] = 0
-        if promjena_u_mogućnosti_pomicanja_charactera != can_character_move_to(mario, polje, kolona_pocetka, mario['x'], mario_next_y):
-            mario['speed_x'] = 0
-        else:
-            promjena_u_mogućnosti_pomicanja_charactera = can_character_move_to(mario, polje, kolona_pocetka, mario['x'], mario_next_y)
+        mario['fly'], mario['speed_y'] = does_character_fly(mario, polje, kolona_pocetka)
+        print(mario['speed_y'])
+        mario['y'] += mario['speed_y']
+
         (mario_row, mario_col) = what_row_col_is_character_in(mario, kolona_pocetka)
         if mario_row > 1:
             if polje[mario_row-1][mario_col] == 3:
