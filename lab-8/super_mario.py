@@ -30,8 +30,8 @@ while running:
     mario['speed_x'] = 0
     mario['state'] = STATE_STANDING
     if keys[pygame.K_LEFT]:
-        mario['state'] = STATE_WALKING
         mario['speed_x'] = -4
+        mario['state'] = STATE_WALKING
     if keys[pygame.K_RIGHT]:
         mario['speed_x'] = 4
         mario['state'] = STATE_WALKING

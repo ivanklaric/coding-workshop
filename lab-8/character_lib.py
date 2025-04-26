@@ -2,6 +2,7 @@ from mario_lib import *
 
 STATE_STANDING = 1
 STATE_WALKING = 2
+STATE_WALKING_BACK = 2.5
 STATE_JUMP = 3
 
 def initialize_character(x, y, speed_x, speed_y, jump_impulse, picture_filename, walking_pictures, jumping_picture, height = 16, width = 16):
@@ -23,13 +24,18 @@ def initialize_character(x, y, speed_x, speed_y, jump_impulse, picture_filename,
     ret['walking_pictures'] = walking_animation
     return ret
 
+
 def draw_character(screen, character):
+    flip = False
+    if character['speed_x'] < 0:
+        flip = True
     if character['state'] == STATE_STANDING:
         nacrtaj_sliku(screen, character['x'], character['y'], character['picture'])
     elif character['state'] == STATE_WALKING:
-        nacrtaj_sliku(screen, character['x'], character['y'], character['walking_pictures'][0])
+        nacrtaj_sliku(screen, character['x'], character['y'], character['walking_pictures'][0],flip)
+    
     elif character['state'] == STATE_JUMP:
-        nacrtaj_sliku(screen, character['x'], character['y'], character['jumping_picture'])
+        nacrtaj_sliku(screen, character['x'], character['y'], character['jumping_picture'],flip)
 
 def can_character_move_to(character, level, kolona_pocetka, next_x, next_y):
     character_rect = pygame.Rect(next_x, next_y, character['width'], character['height'])

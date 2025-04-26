@@ -13,9 +13,12 @@ def ucitaj_sliku(filename, size=(16, 16)):
     image = pygame.image.load(filename)
     return pygame.transform.scale(image, size)
 
-def nacrtaj_sliku(screen, x, y, slika):
+def nacrtaj_sliku(screen, x, y, slika, flip = False):
     if slika != None:
-        screen.blit(slika, (x, y))
+        if flip:
+            screen.blit(pygame.transform.flip(slika,90,0),(x,y))
+        else:
+            screen.blit(slika, (x, y))
 
 def inicijaliziraj_polje(broj_redaka, broj_stupaca):
     polje = []
