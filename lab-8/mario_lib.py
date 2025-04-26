@@ -7,6 +7,7 @@ def ucitaj_sve_slike():
     lista.append(ucitaj_sliku('lab-8/grassy-tile.png'))
     lista.append(ucitaj_sliku('lab-8/question-box.png'))
     lista.append(ucitaj_sliku('lab-8/ground-tile.png'))
+    lista.append(ucitaj_sliku('lab-8/coin.png'))
     return lista
 
 def ucitaj_sliku(filename, size=(16, 16)):
