@@ -27,6 +27,9 @@ class MarioCharacter:
         self.walking_pictures = walking_animation
         self.walking_picture_index = 0
 
+    def walk_stop(self):
+        self.speed_x = 0
+    
     def walk_left(self):
         self.speed_x = -4
 
@@ -91,11 +94,9 @@ class MarioCharacter:
                     level[character_row-1][character_col-1] = 4
                 # check for coins
                 if level[character_row-1][character_col] == 5: # coin hit
-                    score += 1
                     level[character_row-1][character_col] = 0
             elif self.speed_y > 0:
                 if level[character_row+1][character_col] == 5: # coin hit
-                    score += 1
                     level[character_row+1][character_col] = 0
             self.speed_y = 0            
 
@@ -115,3 +116,20 @@ class MarioCharacter:
         elif self.state == STATE_JUMP:
             self.walking_last_updated = 0
             nacrtaj_sliku(screen, self.x, self.y, self.jumping_picture, flip)
+
+class Turtle(MarioCharacter):
+    def walk_left(self):
+        self.speed_x = -2
+
+    def walk_right(self):
+        self.speed_x = 2
+
+    def turnTowardsMario(self, mario):
+        if self.state == STATE_WALKING:
+            if (self.x > mario.x and self.speed_x > 0) or (self.x < mario.x and self.speed_x < 0):
+                self.speed_x = -self.speed_x
+        if self.state == STATE_STANDING:
+            if self.x > mario.x:
+                self.walk_right()
+            elif self.x < mario.x:
+                self.walk_left()
