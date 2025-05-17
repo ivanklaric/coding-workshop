@@ -1,18 +1,22 @@
-class Dog:
+class Animal:
     def __init__(self, name, age):
         self.name = name
         self.age = age
-        
-    def bark(self):
-        return f"{self.name} says woof!"
 
-# Create an instance of the Dog class
-my_dog = Dog("Rex", 3)
-floki = Dog("Floki", 1)
+    def speak(self):
+        print("An animal called " + self.name +" speaks")
 
-# Access attributes and methods
-print(my_dog.name)  # Rex
-print(my_dog.age) # 3
-print(my_dog.bark())  # Rex says woof!
-print(floki.bark())
-print(f"Floki is {floki.age} years old")
+class Dog(Animal):        
+    def speak(self):
+        print(f"{self.name} says woof!")
+
+class Cat(Animal):
+    def speak(self):
+        print(f"{self.name} meows")
+
+
+list_of_animals = [Dog("Floki", 1), Cat("Micko", 3), Cat("Mica", 5), Dog("Rex", 7)]
+
+print("printing speak() calls here:")
+for animal in list_of_animals:
+    animal.speak()
