@@ -16,7 +16,7 @@ class MarioCharacter:
         self.speed_y = speed_y
         self.jump_impulse = jump_impulse
         self.state =  STATE_STANDING
-        self.picture = ucitaj_sliku(picture_filename,(height,width)),
+        self.picture = ucitaj_sliku(picture_filename,(height,width))
         self.jumping_picture =  ucitaj_sliku(jumping_picture,(height,width))
         self.height = height
         self.width =  width

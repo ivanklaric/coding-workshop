@@ -19,7 +19,7 @@ score = 0
 running = True
 lista_slika = ucitaj_sve_slike()
 super_mario = MarioCharacter(100, 100, 0, 0, 3, 'lab-8/mario.png', ['lab-8/mario_w1.png', 'lab-8/mario_w2.png', 'lab-8/mario_w3.png'], 'lab-8/mario_jump.png')
-evil_turtle = MarioCharacter(300,100,-2,0,3,'lab-8/turtle.png',['lab-8/turtle.png'],'lab-8/turtle.png',32,32)
+evil_turtle = MarioCharacter(300, 100, -2, 0, 3,'lab-8/turtle.png', ['lab-8/turtle.png'], 'lab-8/turtle.png', 32, 32)
 kolona_pocetka = 0
 
 while running:
