@@ -20,10 +20,10 @@ running = True
 lista_slika = ucitaj_sve_slike()
 super_mario = MarioCharacter(100, 100, 0, 0, 3, 'lab-8/mario.png', ['lab-8/mario_w1.png', 'lab-8/mario_w2.png', 'lab-8/mario_w3.png'], 'lab-8/mario_jump.png')
 evil_turtle = MarioCharacter(300, 100, -2, 0, 3,'lab-8/turtle.png', ['lab-8/turtle.png'], 'lab-8/turtle.png', 32, 32)
-evil_turtle2 = MarioCharacter(300, 150, 2, 0, 3,'lab-8/turtle.png', ['lab-8/turtle.png'], 'lab-8/turtle.png', 32, 32)
+evil_turtle_flip = MarioCharacter(300, 150, 2, 0, 3,'lab-8/turtle.png', ['lab-8/turtle.png'], 'lab-8/turtle.png', 32, 32)
 kolona_pocetka = 0
 
-turtle_list = [evil_turtle,evil_turtle2]
+turtle_list = [evil_turtle,evil_turtle_flip]
 
 while running:
     # Handle events
@@ -63,7 +63,7 @@ while running:
     nacrtaj_polje(screen, lista_slika, polje, kolona_pocetka)
     
     super_mario.draw(screen)
-    
+
     for turtle in turtle_list:
         turtle.draw(screen)
    
