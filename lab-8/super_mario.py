@@ -87,11 +87,11 @@ while running:
             if polje[mario_row-1][mario_col-1] == 3:
                 polje[mario_row-1][mario_col-1] = 4
             # check for coins
-            if polje[mario_row-1][mario_col] == 5:
+            if polje[mario_row-1][mario_col] == 5: # coin hit
                 score += 1
                 polje[mario_row-1][mario_col] = 0
         elif mario['speed_y'] > 0:
-            if polje[mario_row+1][mario_col] == 5:
+            if polje[mario_row+1][mario_col] == 5: # coin hit
                 score += 1
                 polje[mario_row+1][mario_col] = 0
         mario['speed_y'] = 0        
@@ -111,7 +111,7 @@ while running:
     nacrtaj_polje(screen, lista_slika, polje, kolona_pocetka)
     
     draw_character(screen, mario) 
-    draw_character(screen,turtle)   
+    draw_character(screen, turtle)   
     
     pygame.display.flip()
     # Cap the frame rate
