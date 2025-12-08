@@ -3,5 +3,8 @@
 lab-4/notes.md~
 *.pyc
 .DS_Store
-lab-8/__pycache__/
-lab-8/patrikove_modifikacije/__pycache__/
+2024/lab-8/__pycache__/
+2024/lab-8/patrikove_modifikacije/__pycache__/
+.vscode
+lab-8
+coding-workshop.code-workspace
