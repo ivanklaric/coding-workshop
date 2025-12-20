@@ -2,6 +2,8 @@ import pygame
 
 pygame.init()
 
+clock = pygame.time.Clock() 
+
 RACKET_HEIGHT = 100
 RACKET_WIDTH = 30
 BACKGROUND_COLOR = (18, 59, 13)
@@ -11,8 +13,8 @@ left_racket_y = 768 // 2 - RACKET_HEIGHT // 2
 right_racket_y = 768 // 2 - RACKET_HEIGHT // 2
 ball_x = 512
 ball_y = 384
-ball_speed_x = 0.5
-ball_speed_y = 0.5
+ball_speed_x = 3
+ball_speed_y = 3
 left_player_score = 0
 right_player_score = 0
 
@@ -78,5 +80,6 @@ while running:
 
 
     pygame.display.flip()
+    clock.tick(60)
 
 pygame.quit()
