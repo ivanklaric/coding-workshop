@@ -31,18 +31,20 @@ while running:
         
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w]:
-        left_racket_y -= 1
+        left_racket_y -= 10
     if keys[pygame.K_s]:
-        left_racket_y += 1
+        left_racket_y += 10
     if keys[pygame.K_UP]:
-        right_racket_y -= 1
+        right_racket_y -= 10
     if keys[pygame.K_DOWN]:
-        right_racket_y += 1
+        right_racket_y += 10
 
     # move the ball according to the speed
     ball_x = ball_x + ball_speed_x
     ball_y = ball_y + ball_speed_y
 
+
+    # check if the ball reached left or right edge of the screen
     if ball_x > 1024-15 or ball_x < 15:
         ball_speed_x = -ball_speed_x
         if ball_x > 1024-15:
@@ -50,10 +52,12 @@ while running:
         if ball_x < 15:
             right_player_score += 1
         
+    # check if the ball reached top or bottom of the screen
     if ball_y > 765-15 or ball_y < 15:
         ball_speed_y = -ball_speed_y
 
 
+    # make sure the rackets can't fall off the screen
     if left_racket_y < 0:
         left_racket_y = 0
     if left_racket_y > 668:
@@ -63,12 +67,22 @@ while running:
     if right_racket_y > 668:
         right_racket_y = 668
 
+    # check if the ball collided with the racket
+    left_racket = pygame.Rect(0, left_racket_y, RACKET_WIDTH, RACKET_HEIGHT)
+    right_racket = pygame.Rect(1024-RACKET_WIDTH, right_racket_y, RACKET_WIDTH, RACKET_HEIGHT)
+    ball_rect = pygame.Rect(ball_x-15 , ball_y-15 ,30, 30)
+
+    if ball_rect.colliderect(left_racket):
+        ball_speed_x = 3
+    if ball_rect.colliderect(right_racket):
+        ball_speed_x = -3
+
     # Fill the screen with the background color (Green)
     screen.fill( BACKGROUND_COLOR )     
     # Draw the left racket
-    pygame.draw.rect(screen, RACKET_COLOR, (0, left_racket_y, RACKET_WIDTH, RACKET_HEIGHT))
+    pygame.draw.rect(screen, RACKET_COLOR, left_racket)
     # Draw the right racket
-    pygame.draw.rect(screen, RACKET_COLOR, (1024-RACKET_WIDTH, right_racket_y, RACKET_WIDTH, RACKET_HEIGHT))
+    pygame.draw.rect(screen, RACKET_COLOR, right_racket)
     # Draw the ball
     pygame.draw.circle(screen, RACKET_COLOR, (ball_x, ball_y), 15)
     # Draw the net
