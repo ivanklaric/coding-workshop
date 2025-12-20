@@ -9,6 +9,8 @@ RACKET_COLOR = (255, 255, 255)
 
 left_racket_y = 768 // 2 - RACKET_HEIGHT // 2
 right_racket_y = 768 // 2 - RACKET_HEIGHT // 2
+ball_x = 512
+ball_speed_x = 0.5
 
 screen = pygame.display.set_mode((1024, 768))
 pygame.display.set_caption("Pong!")
@@ -19,18 +21,20 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         
-        if event.type == pygame.KEYDOWN:
-            # Check for left racket events
-            if event.key == pygame.K_w:
-                left_racket_y -= 30
-            if event.key == pygame.K_s:
-                left_racket_y += 30
-            # Check for right racket events
-            if event.key == pygame.K_UP:
-                right_racket_y -= 30
-            if event.key == pygame.K_DOWN:
-                right_racket_y += 30
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_w]:
+        left_racket_y -= 1
+    if keys[pygame.K_s]:
+        left_racket_y += 1
+    if keys[pygame.K_UP]:
+        right_racket_y -= 1
+    if keys[pygame.K_DOWN]:
+        right_racket_y += 1
 
+    ball_x = ball_x + ball_speed_x
+
+    if ball_x > 1024-15 or ball_x < 15:
+        ball_speed_x = -ball_speed_x
 
     if left_racket_y < 0:
         left_racket_y = 0
@@ -47,8 +51,10 @@ while running:
     pygame.draw.rect(screen, RACKET_COLOR, (0, left_racket_y, RACKET_WIDTH, RACKET_HEIGHT))
     # Draw the right racket
     pygame.draw.rect(screen, RACKET_COLOR, (1024-RACKET_WIDTH, right_racket_y, RACKET_WIDTH, RACKET_HEIGHT))
+    pygame.draw.circle(screen, RACKET_COLOR, (ball_x, 384), 15)
     # Draw the net
     pygame.draw.line(screen, RACKET_COLOR, (512, 0), (512, 768))
+
 
     pygame.display.flip()
 
