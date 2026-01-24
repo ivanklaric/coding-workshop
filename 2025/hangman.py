@@ -1,4 +1,5 @@
 import pygame
+import random
 
 pygame.init()
 screen = pygame.display.set_mode((600, 768))
@@ -14,7 +15,7 @@ FONT_COLOR = (255, 255, 255)
 
 mistake_count = 0
 dictionary = [
-    "COVJEK", "DIJETE", "ZENA", "GRAD", "KUCA", "PAS", "MACKA", "DRVO", "RIJEKA", "MORE",
+    "DIJETE", "ŽENA", "GRAD", "KUĆA", "PAS", "MAČKA", "DRVO", "RIJEKA", "MORE",
     "PLANINA", "SUNCE", "MJESEC", "ZVIJEZDA", "NEBO", "ZEMLJA", "VODA", "HRANA", "KRUH", "MLIJEKO",
     "KAVA", "CAJ", "VOCE", "POVRCE", "MESO", "RIBA", "KREMŠNITA", "TRG", "ULICA", "CESTA",
     "AUTO", "VLAK", "AVION", "BROD", "BICIKL", "SKOLA", "KNJIGA", "OLOVKA", "PAPIR", "RACUNALO",
@@ -22,11 +23,12 @@ dictionary = [
     "CVIJET", "TRAVA", "SUMA", "POLJE", "OTOK", "OBALA", "PIJESAK", "KAMEN", "ZIMA", "LJETI",
     "PROLJECE", "JESEN", "KIŠA", "SNIJEG", "VJETAR", "OBLAK", "VATRA", "SRECA", "LJUBAV", "PRIJATELJ",
     "OBITELJ", "MAJKA", "OTAC", "BRAT", "SESTRA", "RAD", "IGRA", "PJESMA", "GLAZBA", "FILM",
-    "SLIKA", "JEZIK", "RIJEC", "VRIJEME", "DAN", "NOC", "JUTRO", "VECER", "SAT", "Tjedan",
-    "MJESEC", "GODINA", "DRZAVA", "NAROD", "NOVAC", "POSAO", "SKOLA", "BOLNICA", "CRKVA", "ZAKON"
+    "SLIKA", "JEZIK", "RIJEC", "VRIJEME", "DAN", "NOC", "JUTRO", "VECER", "SAT", "TJEDAN",
+    "MJESEC", "GODINA", "DRZAVA", "NAROD", "NOVAC", "POSAO", "ŠKOLA", "BOLNICA", "CRKVA", "ZAKON"
 ]
-secret_word = 'SAMOBOR'
-guessed_letters = ['_', '_', '_', '_', '_', '_']
+dictionary_index = random.randint(0, len(dictionary)-1)
+secret_word = dictionary[dictionary_index]
+guessed_letters = ['_'] * len(secret_word)
 attempted_letters = []
 
 running = True
@@ -87,7 +89,9 @@ while running:
     if mistake_count >= 7:
         pygame.draw.line(screen, LINE_COLOR, (300, 375), (350, 500), LINE_WIDTH)  
         game_over_text = font.render("Game Over!", True, FONT_COLOR)
+        secret_word_text = font.render(secret_word, True, FONT_COLOR)
         screen.blit(game_over_text, (150, 300))
+        screen.blit(secret_word_text, (150, 350))
         game_over = True
 
     if not "_" in guessed_letters:
