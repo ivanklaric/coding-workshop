@@ -1,4 +1,5 @@
 import pygame
+import random
 
 pygame.init()
 screen = pygame.display.set_mode((1024, 768))
@@ -8,13 +9,24 @@ background_image = pygame.image.load("img/background.png")
 hammer_image = pygame.image.load("img/hammer.png")
 hammer_down_image = pygame.image.load("img/hammer2.png")
 splash_image = pygame.image.load("img/splash.png")
+images_list = [
+    pygame.image.load("img/apple.png"),
+    pygame.image.load("img/ananas.png"),
+    pygame.image.load("img/banana.png"),
+    pygame.image.load("img/cherry.png")
+]
 
-fruit = {
-    'image': pygame.image.load("img/apple.png"),
-    'coordinate': (300, 300),
-    'rectangle': pygame.Rect(300, 300, 50, 50),
-    'smashed': False
-}
+fruit_list = []
+for i in range(random.randint(5,20)):
+    fruit_x = random.randint(0,900)
+    fruit_y = random.randint(0,700)
+    fruit1 = {
+        'image': images_list[random.randint(0,3)],
+        'coordinate': (fruit_x, fruit_y),
+        'rectangle': pygame.Rect(fruit_x, fruit_y, 50, 50),
+        'smashed': False
+    }
+    fruit_list.append(fruit1)
 
 pygame.mouse.set_visible(False)
 
@@ -33,15 +45,17 @@ while running:
     screen.blit(background_image, (0, 559))
 
     # Draw the fruit
-    if fruit['smashed']:
-        screen.blit(splash_image, fruit['coordinate'])
-    else:
-        screen.blit(fruit['image'], fruit['coordinate'])
+    for fruit in fruit_list:
+        if fruit['smashed']:
+            screen.blit(splash_image, fruit['coordinate'])
+        else:
+            screen.blit(fruit['image'], fruit['coordinate'])
 
     # Draw the hammer
     if mouse_buttons[0]: # the mouse button was clicked
-        if fruit['rectangle'].collidepoint(mouse_pos): # click happened inside the fruit rectangle
-            fruit['smashed'] = True
+        for fruit in fruit_list:
+            if fruit['rectangle'].collidepoint(mouse_pos): # click happened inside the fruit rectangle
+                fruit['smashed'] = True
         # Draw the hammer down
         screen.blit(hammer_down_image, (mouse_pos[0] - 45, mouse_pos[1] - 45))
     else:  
