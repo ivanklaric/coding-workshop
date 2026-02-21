@@ -17,14 +17,16 @@ images_list = [
 ]
 
 fruit_list = []
-for i in range(random.randint(5,20)):
+for i in range(random.randint(2,5)):
     fruit_x = random.randint(0,900)
-    fruit_y = random.randint(0,700)
+    fruit_y = 700
     fruit1 = {
         'image': images_list[random.randint(0,3)],
         'coordinate': (fruit_x, fruit_y),
         'rectangle': pygame.Rect(fruit_x, fruit_y, 50, 50),
-        'smashed': False
+        'smashed': False,
+        'speed_x': random.uniform(-0.5, +0.5),
+        'speed_y': random.uniform(-2.0, -0.1)
     }
     fruit_list.append(fruit1)
 
@@ -43,6 +45,43 @@ while running:
     # Draw the background
     screen.blit(background_image, (0, 0))
     screen.blit(background_image, (0, 559))
+
+    visible_fruit = 0
+    for fruit in fruit_list:
+        if not fruit['smashed']:
+            visible = True
+            (fruit_x, fruit_y) = fruit['coordinate']
+            if fruit_x > 1024 or fruit_x < 0:
+                visible = False
+            if fruit_y > 768:
+                visible = False
+            if visible:
+                visible_fruit = visible_fruit + 1
+    if visible_fruit < 3:
+        fruit_x = random.randint(0,900)
+        fruit_y = 700
+        fruit1 = {
+            'image': images_list[random.randint(0,3)],
+            'coordinate': (fruit_x, fruit_y),
+            'rectangle': pygame.Rect(fruit_x, fruit_y, 50, 50),
+            'smashed': False,
+            'speed_x': random.uniform(-0.5, +0.5),
+            'speed_y': random.uniform(-2.0, -0.1)
+        }
+        fruit_list.append(fruit1)
+
+
+    # Introduce gravity
+    for fruit in fruit_list:
+        fruit['speed_y'] = fruit['speed_y'] + 0.001
+
+    # Move the fruits
+    for fruit in fruit_list:
+        if not fruit['smashed']:
+            (fruit_x, fruit_y) = fruit['coordinate']
+            fruit['coordinate'] = (fruit_x + fruit['speed_x'], fruit_y + fruit['speed_y'])
+            fruit['rectangle'] = pygame.Rect(fruit_x + fruit['speed_x'], fruit_y + fruit['speed_y'], 50, 50)
+
 
     # Draw the fruit
     for fruit in fruit_list:
