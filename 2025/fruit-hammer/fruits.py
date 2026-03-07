@@ -1,6 +1,19 @@
 import pygame
 import random
 
+def generate_fruit():
+    fruit_x = random.randint(0,900)
+    fruit_y = 700
+    fruit1 = {
+        'image': images_list[random.randint(0,3)],
+        'coordinate': (fruit_x, fruit_y),
+        'rectangle': pygame.Rect(fruit_x, fruit_y, 50, 50),
+        'smashed': False,
+        'speed_x': random.uniform(-0.5, +0.5),
+        'speed_y': random.uniform(-2.0, -0.1)
+    }
+    return fruit1  
+
 pygame.init()
 screen = pygame.display.set_mode((1024, 768))
 pygame.display.set_caption("Fruit Hammer")
@@ -18,17 +31,7 @@ images_list = [
 
 fruit_list = []
 for i in range(random.randint(2,5)):
-    fruit_x = random.randint(0,900)
-    fruit_y = 700
-    fruit1 = {
-        'image': images_list[random.randint(0,3)],
-        'coordinate': (fruit_x, fruit_y),
-        'rectangle': pygame.Rect(fruit_x, fruit_y, 50, 50),
-        'smashed': False,
-        'speed_x': random.uniform(-0.5, +0.5),
-        'speed_y': random.uniform(-2.0, -0.1)
-    }
-    fruit_list.append(fruit1)
+    fruit_list.append(generate_fruit())
 
 pygame.mouse.set_visible(False)
 
@@ -58,17 +61,7 @@ while running:
             if visible:
                 visible_fruit = visible_fruit + 1
     if visible_fruit < 3:
-        fruit_x = random.randint(0,900)
-        fruit_y = 700
-        fruit1 = {
-            'image': images_list[random.randint(0,3)],
-            'coordinate': (fruit_x, fruit_y),
-            'rectangle': pygame.Rect(fruit_x, fruit_y, 50, 50),
-            'smashed': False,
-            'speed_x': random.uniform(-0.5, +0.5),
-            'speed_y': random.uniform(-2.0, -0.1)
-        }
-        fruit_list.append(fruit1)
+        fruit_list.append(generate_fruit())
 
 
     # Introduce gravity
