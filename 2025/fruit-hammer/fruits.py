@@ -4,15 +4,21 @@ import random
 def generate_fruit():
     fruit_x = random.randint(0,900)
     fruit_y = 700
+    fruit_index = random.randint(0,4)
     fruit1 = {
-        'image': images_list[random.randint(0,3)],
+        'image': images_list[fruit_index],
         'coordinate': (fruit_x, fruit_y),
         'rectangle': pygame.Rect(fruit_x, fruit_y, 50, 50),
         'smashed': False,
         'speed_x': random.uniform(-0.5, +0.5),
-        'speed_y': random.uniform(-2.0, -0.1)
+        'speed_y': random.uniform(-1.0, -0.1),
+        'bomb': False
     }
+    if fruit_index == 4:
+        fruit1['bomb'] = True
     return fruit1  
+
+
 
 pygame.init()
 screen = pygame.display.set_mode((1024, 768))
@@ -26,9 +32,10 @@ images_list = [
     pygame.image.load("img/apple.png"),
     pygame.image.load("img/ananas.png"),
     pygame.image.load("img/banana.png"),
-    pygame.image.load("img/cherry.png")
+    pygame.image.load("img/cherry.png"),
+    pygame.image.load('img/bomb.png')
 ]
-font = pygame.font.SysFont("Arial", 48)
+font = pygame.font.SysFont("Comics Sans", 48)
 
 total_score = 0
 fruit_list = []
@@ -101,8 +108,13 @@ while running:
     # Handle Hammer
     if mouse_buttons[0]: # the mouse button was clicked
         for fruit in fruit_list:
-            if fruit['rectangle'].collidepoint(mouse_pos): # click happened inside the fruit rectangle
+            if fruit['rectangle'].collidepoint(mouse_pos) and not fruit['smashed']: # click happened inside the fruit rectangle
                 fruit['smashed'] = True
+                if not fruit['bomb']:
+                    total_score = total_score + 5
+                else:
+                    total_score = total_score - 10
+                    
         # Draw the hammer down
         screen.blit(hammer_down_image, (mouse_pos[0] - 45, mouse_pos[1] - 45))
     else:  
