@@ -28,7 +28,9 @@ images_list = [
     pygame.image.load("img/banana.png"),
     pygame.image.load("img/cherry.png")
 ]
+font = pygame.font.SysFont("Arial", 48)
 
+total_score = 0
 fruit_list = []
 for i in range(random.randint(2,5)):
     fruit_list.append(generate_fruit())
@@ -48,6 +50,10 @@ while running:
     # Draw the background
     screen.blit(background_image, (0, 0))
     screen.blit(background_image, (0, 559))
+
+    # Draw the score
+    text = font.render("Score: " + str(total_score), True, "BLACK")
+    screen.blit(text, (10, 10))
 
     visible_fruit = 0
     for fruit in fruit_list:
@@ -83,7 +89,7 @@ while running:
         else:
             screen.blit(fruit['image'], fruit['coordinate'])
 
-    # Draw the hammer
+    # Handle Hammer
     if mouse_buttons[0]: # the mouse button was clicked
         for fruit in fruit_list:
             if fruit['rectangle'].collidepoint(mouse_pos): # click happened inside the fruit rectangle
@@ -91,6 +97,7 @@ while running:
         # Draw the hammer down
         screen.blit(hammer_down_image, (mouse_pos[0] - 45, mouse_pos[1] - 45))
     else:  
+        # Draw the hammer up
         screen.blit(hammer_image, (mouse_pos[0] - 45, mouse_pos[1] - 45))
 
     pygame.display.flip()
