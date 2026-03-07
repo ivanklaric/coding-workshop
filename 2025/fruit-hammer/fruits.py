@@ -36,6 +36,7 @@ for i in range(random.randint(2,5)):
     fruit_list.append(generate_fruit())
 
 pygame.mouse.set_visible(False)
+mouse_trail = []
 
 running = True
 while running:
@@ -46,14 +47,17 @@ while running:
 
     mouse_pos = pygame.mouse.get_pos()
     mouse_buttons = pygame.mouse.get_pressed()
+    if  not mouse_buttons[0]:
+        mouse_trail = []
+    else:
+        mouse_trail.append(mouse_pos)
+    
+    if len(mouse_trail) > 100:
+        mouse_trail = mouse_trail[-100:]
 
     # Draw the background
     screen.blit(background_image, (0, 0))
     screen.blit(background_image, (0, 559))
-
-    # Draw the score
-    text = font.render("Score: " + str(total_score), True, "BLACK")
-    screen.blit(text, (10, 10))
 
     visible_fruit = 0
     for fruit in fruit_list:
@@ -89,16 +93,25 @@ while running:
         else:
             screen.blit(fruit['image'], fruit['coordinate'])
 
+    for i in range(len(mouse_trail)):
+        if i != len(mouse_trail) - 1:
+            pygame.draw.line(screen, (109, 237, 235), mouse_trail[i], mouse_trail[i + 1], 3)
+
     # Handle Hammer
     if mouse_buttons[0]: # the mouse button was clicked
         for fruit in fruit_list:
-            if fruit['rectangle'].collidepoint(mouse_pos): # click happened inside the fruit rectangle
+            if fruit['rectangle'].collidepoint(mouse_pos) and not fruit['smashed']: # click happened inside the fruit rectangle
                 fruit['smashed'] = True
+                total_score += round(abs(fruit['speed_x']) + abs(fruit['speed_y']) * 20) / 4
         # Draw the hammer down
         screen.blit(hammer_down_image, (mouse_pos[0] - 45, mouse_pos[1] - 45))
     else:  
         # Draw the hammer up
         screen.blit(hammer_image, (mouse_pos[0] - 45, mouse_pos[1] - 45))
+    
+    # Draw the score
+    text = font.render("Score: " + str(total_score), True, "BLACK")
+    screen.blit(text, (10, 10))
 
     pygame.display.flip()
 
