@@ -36,6 +36,7 @@ for i in range(random.randint(2,5)):
     fruit_list.append(generate_fruit())
 
 pygame.mouse.set_visible(False)
+mouse_trail = []
 
 running = True
 while running:
@@ -46,6 +47,10 @@ while running:
 
     mouse_pos = pygame.mouse.get_pos()
     mouse_buttons = pygame.mouse.get_pressed()
+    if not mouse_buttons[0]:
+        mouse_trail = []
+    else:
+        mouse_trail.append(mouse_pos)
 
     # Draw the background
     screen.blit(background_image, (0, 0))
@@ -88,6 +93,10 @@ while running:
             screen.blit(splash_image, fruit['coordinate'])
         else:
             screen.blit(fruit['image'], fruit['coordinate'])
+
+    if len(mouse_trail) > 1:
+        for i in range(1, len(mouse_trail)):
+            pygame.draw.line(screen, (255, 255, 255), mouse_trail[i-1], mouse_trail[i], 8)
 
     # Handle Hammer
     if mouse_buttons[0]: # the mouse button was clicked
