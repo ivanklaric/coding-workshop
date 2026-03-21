@@ -27,8 +27,10 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
+            if event.key == pygame.K_SPACE and player['y'] == 644:
                 player['speed_y'] = JUMP_VELOCITY
+        if event.type == pygame.MOUSEBUTTONDOWN and player['y'] == 644:
+            player['speed_y'] = JUMP_VELOCITY
     
     # If needed, move the background
     if pygame.time.get_ticks() - time_since_background_move > 40:
@@ -37,6 +39,9 @@ while running:
         player['speed_y'] += GRAVITY
         player['y'] += player['speed_y']
         time_since_background_move = pygame.time.get_ticks()
+        if player['y'] >= 644:
+            player['y'] = 644
+            player['speed_y'] = 0
     if background_left_x <= -1024:
         background_left_x = 0
     # Draw the background
