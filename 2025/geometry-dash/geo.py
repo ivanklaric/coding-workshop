@@ -11,14 +11,16 @@ background = pygame.image.load("img/background.png")
 background_left_x = 0
 time_since_background_move = pygame.time.get_ticks()
 
-GRAVITY = 1
-JUMP_VELOCITY = -15
+GRAVITY = 2.5
+JUMP_VELOCITY = -30
 SCREEN_SPEED = 8
+ROTATION_SPEED = -6
 player = {
     'image': pygame.image.load("img/player.png"),
     'x': 256,
     'y': 644,
-    'speed_y': 0
+    'speed_y': 0,
+    'rotation_angle': 0
 }
 
 running = True
@@ -38,17 +40,21 @@ while running:
         # Move the player
         player['speed_y'] += GRAVITY
         player['y'] += player['speed_y']
+        player['rotation_angle'] += ROTATION_SPEED
         time_since_background_move = pygame.time.get_ticks()
         if player['y'] >= 644:
             player['y'] = 644
             player['speed_y'] = 0
+            player['rotation_angle'] = round(player['rotation_angle'] / 90) * 90
+
     if background_left_x <= -1024:
         background_left_x = 0
     # Draw the background
     screen.blit(background, (background_left_x, 0))
     screen.blit(background, (background_left_x+1024, 0))
     # Draw the player
-    screen.blit(player['image'], (player['x'], player['y']))
+    rotated_player = pygame.transform.rotate(player['image'], player['rotation_angle'])
+    screen.blit(rotated_player, (player['x'], player['y']))
 
     pygame.display.flip()
 
