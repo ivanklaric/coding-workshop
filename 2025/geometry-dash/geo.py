@@ -13,6 +13,7 @@ time_since_background_move = pygame.time.get_ticks()
 
 GRAVITY = 1
 JUMP_VELOCITY = -15
+SCREEN_SPEED = 8
 player = {
     'image': pygame.image.load("img/player.png"),
     'x': 256,
@@ -31,7 +32,7 @@ while running:
     
     # If needed, move the background
     if pygame.time.get_ticks() - time_since_background_move > 40:
-        background_left_x -= 4
+        background_left_x -= SCREEN_SPEED
         # Move the player
         player['speed_y'] += GRAVITY
         player['y'] += player['speed_y']
