@@ -1,4 +1,10 @@
 import pygame
+import random
+
+def are_they_clashing(player, spike):
+    player_rect = player['image'].get_rect(topleft=(player['x'], player['y']))
+    spike_rect = spike['image'].get_rect(topleft=(spike['x'], spike['y']))
+    return player_rect.colliderect(spike_rect)
 
 # Initialize pygame
 pygame.init()
@@ -11,10 +17,10 @@ background = pygame.image.load("img/background.png")
 background_left_x = 0
 time_since_background_move = pygame.time.get_ticks()
 
-GRAVITY = 2.5
-JUMP_VELOCITY = -30
-SCREEN_SPEED = 8
-ROTATION_SPEED = -6
+GRAVITY = 4
+JUMP_VELOCITY = -40
+SCREEN_SPEED = 16
+ROTATION_SPEED = -5
 player = {
     'image': pygame.image.load("img/player.png"),
     'x': 256,
@@ -22,6 +28,19 @@ player = {
     'speed_y': 0,
     'rotation_angle': 0
 }
+spikes = [
+    {
+        'image': pygame.image.load("img/spike.png"),
+        'x': random.randint(350, 1000),
+        'y': 644
+    },
+    {
+        'image': pygame.image.load("img/spike.png"),
+        'x': random.randint(350, 1000),
+        'y': 644
+    }
+
+]
 
 running = True
 while running:
@@ -34,9 +53,10 @@ while running:
         if event.type == pygame.MOUSEBUTTONDOWN and player['y'] == 644:
             player['speed_y'] = JUMP_VELOCITY
     
-    # If needed, move the background
+    # If needed, draw the new screen state
     if pygame.time.get_ticks() - time_since_background_move > 40:
         background_left_x -= SCREEN_SPEED
+        spike['x'] -= SCREEN_SPEED
         # Move the player
         player['speed_y'] += GRAVITY
         player['y'] += player['speed_y']
@@ -46,12 +66,17 @@ while running:
             player['y'] = 644
             player['speed_y'] = 0
             player['rotation_angle'] = round(player['rotation_angle'] / 90) * 90
+        if are_they_clashing(player, spike):
+            running = False
 
     if background_left_x <= -1024:
         background_left_x = 0
+    if spike['x'] <= -50:
+        spike['x'] = 1024
     # Draw the background
     screen.blit(background, (background_left_x, 0))
     screen.blit(background, (background_left_x+1024, 0))
+    screen.blit(spike['image'], (spike['x'], spike['y']))
     # Draw the player
     rotated_player = pygame.transform.rotate(player['image'], player['rotation_angle'])
     screen.blit(rotated_player, (player['x'], player['y']))
