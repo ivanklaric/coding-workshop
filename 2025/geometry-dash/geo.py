@@ -10,6 +10,7 @@ def are_they_clashing(player, spike):
 pygame.init()
 
 # Create a window
+font = pygame.font.SysFont("Comics Sans", 48)
 screen = pygame.display.set_mode((1024, 768))
 pygame.display.set_caption("Geometry Dash")
 
@@ -29,7 +30,8 @@ player = {
     'rotation_angle': 0
 }
 
-level = [
+def reset_level():
+    return [
     # Warm-up: single spike
     {'image': pygame.image.load("img/spike.png"), 'x': 700, 'y': 644, 'type': 'spike'},
 
@@ -71,17 +73,34 @@ level = [
     {'image': pygame.image.load("img/spike.png"), 'x': 7164, 'y': 644, 'type': 'spike'},
 ]
 
+level = reset_level()
+
+game_over = False
 running = True
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE and game_over:
+                game_over = False
+                background_left_x = 0
+                player['x'] = 256
+                player['y'] = 644
+                level = reset_level()
+                continue
             if event.key == pygame.K_SPACE and player['y'] in (644, 580):
                 player['speed_y'] = JUMP_VELOCITY
         if event.type == pygame.MOUSEBUTTONDOWN and player['y'] in (644, 580):
             player['speed_y'] = JUMP_VELOCITY
     
+    if game_over:
+        # Draw the score
+        text = font.render("Game Over!", True, "WHITE")
+        screen.blit(text, (500, 300))
+        pygame.display.flip()
+        continue
+
     # If needed, draw the new screen state
     if pygame.time.get_ticks() - time_since_background_move > 40:
         background_left_x -= SCREEN_SPEED
@@ -100,7 +119,7 @@ while running:
         for element in level:
             if are_they_clashing(player, element):
                 if element['type'] == 'spike' or element['type'] == 'block' and player['y'] == 644:
-                    running = False
+                    game_over = True
                 if element['type'] == 'block' and player['y'] < 644:
                     player['speed_y'] = 0
                     player['y'] = 580
