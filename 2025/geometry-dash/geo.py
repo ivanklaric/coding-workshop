@@ -67,14 +67,15 @@ while running:
             player['y'] = 644
             player['speed_y'] = 0
             player['rotation_angle'] = round(player['rotation_angle'] / 90) * 90
-        if are_they_clashing(player, spike):
-            running = False
 
     if background_left_x <= -1024:
         background_left_x = 0
     for spike in spikes:
         if spike['x'] <= -50:
             spike['x'] = 1024
+        if are_they_clashing(player, spike):
+            running = False
+
     # Draw the background
     screen.blit(background, (background_left_x, 0))
     screen.blit(background, (background_left_x+1024, 0))
