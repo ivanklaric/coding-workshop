@@ -28,32 +28,47 @@ player = {
     'speed_y': 0,
     'rotation_angle': 0
 }
-level = [
-    {
-        'image': pygame.image.load("img/spike.png"),
-        'x': 600,
-        'y': 644,
-        'type': 'spike'
-    },
-    {
-        'image': pygame.image.load("img/spike.png"),
-        'x': 1700,
-        'y': 644,
-        'type': 'spike'
-    },
-    {
-        'image': pygame.image.load("img/block.png"),
-        'x': 1200,
-        'y': 644,
-        'type': 'block'
-    },
-    {
-        'image': pygame.image.load("img/block.png"),
-        'x': 1264,
-        'y': 644,
-        'type': 'block'
-    },
 
+level = [
+    # Warm-up: single spike
+    {'image': pygame.image.load("img/spike.png"), 'x': 700, 'y': 644, 'type': 'spike'},
+
+    # Two spikes close together (one jump clears both)
+    {'image': pygame.image.load("img/spike.png"), 'x': 1300, 'y': 644, 'type': 'spike'},
+    {'image': pygame.image.load("img/spike.png"), 'x': 1364, 'y': 644, 'type': 'spike'},
+
+    # Block platform to jump onto, with a spike right after
+    {'image': pygame.image.load("img/block.png"), 'x': 2000, 'y': 644, 'type': 'block'},
+    {'image': pygame.image.load("img/block.png"), 'x': 2064, 'y': 644, 'type': 'block'},
+    {'image': pygame.image.load("img/spike.png"), 'x': 2300, 'y': 644, 'type': 'spike'},
+
+    # Spike trio - need a well-timed jump
+    {'image': pygame.image.load("img/spike.png"), 'x': 2900, 'y': 644, 'type': 'spike'},
+    {'image': pygame.image.load("img/spike.png"), 'x': 2964, 'y': 644, 'type': 'spike'},
+    {'image': pygame.image.load("img/spike.png"), 'x': 3028, 'y': 644, 'type': 'spike'},
+
+    # Block staircase leading up
+    {'image': pygame.image.load("img/block.png"), 'x': 3700, 'y': 644, 'type': 'block'},
+    {'image': pygame.image.load("img/block.png"), 'x': 3764, 'y': 644, 'type': 'block'},
+    {'image': pygame.image.load("img/block.png"), 'x': 3828, 'y': 644, 'type': 'block'},
+
+    # Gap, then another platform
+    {'image': pygame.image.load("img/block.png"), 'x': 4300, 'y': 644, 'type': 'block'},
+
+    # Spike right after landing - quick reaction needed
+    {'image': pygame.image.load("img/spike.png"), 'x': 4600, 'y': 644, 'type': 'spike'},
+
+    # Long spike field - the climax
+    {'image': pygame.image.load("img/spike.png"), 'x': 5300, 'y': 644, 'type': 'spike'},
+    {'image': pygame.image.load("img/spike.png"), 'x': 5364, 'y': 644, 'type': 'spike'},
+    {'image': pygame.image.load("img/block.png"), 'x': 5500, 'y': 644, 'type': 'block'},
+    {'image': pygame.image.load("img/spike.png"), 'x': 5700, 'y': 644, 'type': 'spike'},
+    {'image': pygame.image.load("img/spike.png"), 'x': 5764, 'y': 644, 'type': 'spike'},
+
+    # Victory stretch - a couple final spikes
+    {'image': pygame.image.load("img/spike.png"), 'x': 6500, 'y': 644, 'type': 'spike'},
+    {'image': pygame.image.load("img/spike.png"), 'x': 7100, 'y': 644, 'type': 'spike'},
+    {'image': pygame.image.load("img/spike.png"), 'x': 7164, 'y': 644, 'type': 'spike'},
 ]
 
 running = True
