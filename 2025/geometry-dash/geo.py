@@ -79,10 +79,9 @@ while running:
     if background_left_x <= -1024:
         background_left_x = 0
     for element in level:
-        if element['x'] <= -50:
-            element['x'] = 1024
         if are_they_clashing(player, element):
-            running = False
+            if element['type'] == 'spike':
+                running = False
 
     # Draw the background
     screen.blit(background, (background_left_x, 0))
