@@ -84,13 +84,13 @@ while running:
         
         for element in level:
             if are_they_clashing(player, element):
-                if element['type'] == 'spike':
+                if element['type'] == 'spike' or element['type'] == 'block' and player['y'] == 644:
                     running = False
                 if element['type'] == 'block' and player['y'] < 644:
                     player['speed_y'] = 0
                     player['y'] = 580
                     player['rotation_angle'] = round(player['rotation_angle'] / 90) * 90
-                    print("here!")
+                
 
 
     if background_left_x <= -1024:
