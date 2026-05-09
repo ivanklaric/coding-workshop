@@ -56,7 +56,8 @@ while running:
     # If needed, draw the new screen state
     if pygame.time.get_ticks() - time_since_background_move > 40:
         background_left_x -= SCREEN_SPEED
-        spike['x'] -= SCREEN_SPEED
+        for spike in spikes:
+            spike['x'] -= SCREEN_SPEED
         # Move the player
         player['speed_y'] += GRAVITY
         player['y'] += player['speed_y']
@@ -71,8 +72,9 @@ while running:
 
     if background_left_x <= -1024:
         background_left_x = 0
-    if spike['x'] <= -50:
-        spike['x'] = 1024
+    for spike in spikes:
+        if spike['x'] <= -50:
+            spike['x'] = 1024
     # Draw the background
     screen.blit(background, (background_left_x, 0))
     screen.blit(background, (background_left_x+1024, 0))
