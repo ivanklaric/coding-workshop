@@ -28,16 +28,24 @@ player = {
     'speed_y': 0,
     'rotation_angle': 0
 }
-spikes = [
+level = [
     {
         'image': pygame.image.load("img/spike.png"),
         'x': 600,
-        'y': 644
+        'y': 644,
+        'type': 'spike'
     },
     {
         'image': pygame.image.load("img/spike.png"),
-        'x': 900,
-        'y': 644
+        'x': 1700,
+        'y': 644,
+        'type': 'spike'
+    },
+    {
+        'image': pygame.image.load("img/block.png"),
+        'x': 1200,
+        'y': 644,
+        'type': 'block'
     }
 
 ]
@@ -56,8 +64,8 @@ while running:
     # If needed, draw the new screen state
     if pygame.time.get_ticks() - time_since_background_move > 40:
         background_left_x -= SCREEN_SPEED
-        for spike in spikes:
-            spike['x'] -= SCREEN_SPEED
+        for element in level:
+            element['x'] -= SCREEN_SPEED
         # Move the player
         player['speed_y'] += GRAVITY
         player['y'] += player['speed_y']
@@ -70,17 +78,17 @@ while running:
 
     if background_left_x <= -1024:
         background_left_x = 0
-    for spike in spikes:
-        if spike['x'] <= -50:
-            spike['x'] = 1024
-        if are_they_clashing(player, spike):
+    for element in level:
+        if element['x'] <= -50:
+            element['x'] = 1024
+        if are_they_clashing(player, element):
             running = False
 
     # Draw the background
     screen.blit(background, (background_left_x, 0))
     screen.blit(background, (background_left_x+1024, 0))
-    for spike in spikes:
-        screen.blit(spike['image'], (spike['x'], spike['y']))
+    for element in level:
+        screen.blit(element['image'], (element['x'], element['y']))
     # Draw the player
     rotated_player = pygame.transform.rotate(player['image'], player['rotation_angle'])
     screen.blit(rotated_player, (player['x'], player['y']))
