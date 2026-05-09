@@ -46,7 +46,13 @@ level = [
         'x': 1200,
         'y': 644,
         'type': 'block'
-    }
+    },
+    {
+        'image': pygame.image.load("img/block.png"),
+        'x': 1264,
+        'y': 644,
+        'type': 'block'
+    },
 
 ]
 
@@ -75,13 +81,22 @@ while running:
             player['y'] = 644
             player['speed_y'] = 0
             player['rotation_angle'] = round(player['rotation_angle'] / 90) * 90
+        
+        for element in level:
+            if are_they_clashing(player, element):
+                if element['type'] == 'spike':
+                    running = False
+                if element['type'] == 'block' and player['y'] < 644:
+                    player['speed_y'] = 0
+                    player['y'] = 580
+                    player['rotation_angle'] = round(player['rotation_angle'] / 90) * 90
+                    print("here!")
+
 
     if background_left_x <= -1024:
         background_left_x = 0
-    for element in level:
-        if are_they_clashing(player, element):
-            if element['type'] == 'spike':
-                running = False
+
+
 
     # Draw the background
     screen.blit(background, (background_left_x, 0))
