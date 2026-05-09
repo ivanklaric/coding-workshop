@@ -18,7 +18,7 @@ background_left_x = 0
 time_since_background_move = pygame.time.get_ticks()
 
 GRAVITY = 4
-JUMP_VELOCITY = -40
+JUMP_VELOCITY = -43
 SCREEN_SPEED = 16
 ROTATION_SPEED = -5
 player = {
@@ -77,9 +77,9 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE and player['y'] == 644:
+            if event.key == pygame.K_SPACE and player['y'] in (644, 580):
                 player['speed_y'] = JUMP_VELOCITY
-        if event.type == pygame.MOUSEBUTTONDOWN and player['y'] == 644:
+        if event.type == pygame.MOUSEBUTTONDOWN and player['y'] in (644, 580):
             player['speed_y'] = JUMP_VELOCITY
     
     # If needed, draw the new screen state
