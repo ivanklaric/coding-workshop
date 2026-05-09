@@ -1,6 +1,12 @@
 import pygame
 import random
 
+pygame.mixer.init()
+
+pygame.mixer.music.load("music.mp3")
+pygame.mixer.music.play(-1)  # -1 = loop forever, 0 = play once, n = loop n times
+
+
 def are_they_clashing(player, spike):
     player_rect = player['image'].get_rect(topleft=(player['x'], player['y']))
     spike_rect = spike['image'].get_rect(topleft=(spike['x'], spike['y']))
