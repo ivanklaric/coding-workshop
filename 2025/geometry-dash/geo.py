@@ -31,12 +31,12 @@ player = {
 spikes = [
     {
         'image': pygame.image.load("img/spike.png"),
-        'x': random.randint(350, 1000),
+        'x': 600,
         'y': 644
     },
     {
         'image': pygame.image.load("img/spike.png"),
-        'x': random.randint(350, 1000),
+        'x': 900,
         'y': 644
     }
 
@@ -79,7 +79,8 @@ while running:
     # Draw the background
     screen.blit(background, (background_left_x, 0))
     screen.blit(background, (background_left_x+1024, 0))
-    screen.blit(spike['image'], (spike['x'], spike['y']))
+    for spike in spikes:
+        screen.blit(spike['image'], (spike['x'], spike['y']))
     # Draw the player
     rotated_player = pygame.transform.rotate(player['image'], player['rotation_angle'])
     screen.blit(rotated_player, (player['x'], player['y']))
