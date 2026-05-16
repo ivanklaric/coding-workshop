@@ -43,9 +43,16 @@ while running:
     keys_pressed = pygame.key.get_pressed()
 
     if keys_pressed[pygame.K_LEFT] or keys_pressed[pygame.K_a]:
-        pacman_x -= 50
+        pacman_x -= 2
+    if keys_pressed[pygame.K_RIGHT] or keys_pressed[pygame.K_d]:
+        pacman_x -= 2
+    if keys_pressed[pygame.K_UP] or keys_pressed[pygame.K_w]:
+        pacman_x -= 2
+    if keys_pressed[pygame.K_DOWN] or keys_pressed[pygame.K_s]:
+        pacman_x -= 2
 
 
+    screen.fill("BLACK")
     for r in range(15):
         for i in range(15):
             if level[r][i] == 0:
