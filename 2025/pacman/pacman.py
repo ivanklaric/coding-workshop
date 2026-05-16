@@ -45,11 +45,11 @@ while running:
     if keys_pressed[pygame.K_LEFT] or keys_pressed[pygame.K_a]:
         pacman_x -= 2
     if keys_pressed[pygame.K_RIGHT] or keys_pressed[pygame.K_d]:
-        pacman_x -= 2
+        pacman_x += 2
     if keys_pressed[pygame.K_UP] or keys_pressed[pygame.K_w]:
-        pacman_x -= 2
+        pacman_y -= 2
     if keys_pressed[pygame.K_DOWN] or keys_pressed[pygame.K_s]:
-        pacman_x -= 2
+        pacman_y += 2
 
 
     screen.fill("BLACK")
