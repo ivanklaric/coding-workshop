@@ -7,6 +7,7 @@ pygame.init()
 
 screen = pygame.display.set_mode((768, 1024))
 pygame.display.set_caption("Pacman!")
+font = pygame.font.SysFont("Arial New", 24)
 
 maze_element = pygame.image.load("img/maze-element.png")
 blank_element = pygame.image.load("img/blank-element.png")
@@ -88,6 +89,9 @@ def can_move_down(pacman_x, pacman_y):
             return False
     return True
 
+def get_debug_info():
+    return "X: " + str(pacman_x) + ", Y:" + str(pacman_y) + ", S_X:" + str(field_begin_x) + ", S_Y:" + str(field_begin_y) + ", (R,C):" + str(get_row_col(pacman_x, pacman_y))
+
 running = True
 while running:
     for event in pygame.event.get():
@@ -106,6 +110,9 @@ while running:
 
 
     screen.fill("BLACK")
+    text = font.render(get_debug_info(), True, "WHITE")
+    screen.blit(text, (10, 10))
+
     for r in range(15):
         for i in range(15):
             if level[r][i] == 0:
