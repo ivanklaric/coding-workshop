@@ -55,7 +55,7 @@ def get_remaining_space_y(pacman_y):
 
 def can_move_left(pacman_x, pacman_y):
     (pacman_row, pacman_col) = get_row_col(pacman_x, pacman_y)
-    if pacman_col == 0:
+    if pacman_col == 14:
         return False
     if level[pacman_row][pacman_col-1] == 1:
         if get_remaining_space_x(pacman_x) == 0:
@@ -82,7 +82,7 @@ def can_move_up(pacman_x, pacman_y):
 
 def can_move_down(pacman_x, pacman_y):
     (pacman_row, pacman_col) = get_row_col(pacman_x, pacman_y)
-    if pacman_row == 0:
+    if pacman_row == 14:
         return False
     if level[pacman_row + 1][pacman_col] == 1:
         if get_remaining_space_y(pacman_y) == 0:
@@ -93,6 +93,8 @@ def get_debug_info():
     return "X: " + str(pacman_x) + ", Y:" + str(pacman_y) + ", S_X:" + str(field_begin_x) + ", S_Y:" + str(field_begin_y) + ", (R,C):" + str(get_row_col(pacman_x, pacman_y))
 
 running = True
+angle = 0
+
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -100,12 +102,16 @@ while running:
     keys_pressed = pygame.key.get_pressed()
 
     if (keys_pressed[pygame.K_LEFT] or keys_pressed[pygame.K_a]) and can_move_left(pacman_x, pacman_y):
+        angle = 180
         pacman_x -= 2
     if (keys_pressed[pygame.K_RIGHT] or keys_pressed[pygame.K_d]) and can_move_right(pacman_x, pacman_y):
+        angle = 0
         pacman_x += 2
     if (keys_pressed[pygame.K_UP] or keys_pressed[pygame.K_w]) and can_move_up(pacman_x, pacman_y):
+        angle = 90
         pacman_y -= 2
     if (keys_pressed[pygame.K_DOWN] or keys_pressed[pygame.K_s]) and can_move_down(pacman_x, pacman_y):
+        angle = 270
         pacman_y += 2
 
 
@@ -124,8 +130,10 @@ while running:
             if level[r][i] == 3:
                 screen.blit(big_dot, (field_begin_x + 50*i, field_begin_y + 50*r))
 
-
-    screen.blit(pacman, (pacman_x, pacman_y))
+    rotated_pacman = pygame.transform.rotate(pacman, angle)
+    screen.blit(rotated_pacman, (pacman_x, pacman_y))
+    (pacman_row, pacman_col) = get_row_col(pacman_x, pacman_y)
+    pygame.draw.rect(screen, "WHITE", ( field_begin_x + pacman_col * 50, field_begin_y + pacman_row * 50, 50, 50), 2)
     pygame.display.flip()
 
 pygame.quit()
