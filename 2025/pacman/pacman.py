@@ -55,7 +55,10 @@ def get_remaining_space_y(pacman_y):
 
 def can_move_left(pacman_x, pacman_y):
     (pacman_row, pacman_col) = get_row_col(pacman_x, pacman_y)
-    if pacman_col == 14:
+    if pacman_col == 0:
+        return False
+    # samo skreni vodoravno kad smo poravnati po visini (inace bismo zagazili u zid)
+    if get_remaining_space_y(pacman_y) != 0:
         return False
     if level[pacman_row][pacman_col-1] == 1:
         if get_remaining_space_x(pacman_x) == 0:
@@ -64,7 +67,9 @@ def can_move_left(pacman_x, pacman_y):
 
 def can_move_right(pacman_x, pacman_y):
     (pacman_row, pacman_col) = get_row_col(pacman_x, pacman_y)
-    if pacman_col == 0:
+    if pacman_col == 14:
+        return False
+    if get_remaining_space_y(pacman_y) != 0:
         return False
     if level[pacman_row][pacman_col+1] == 1:
         if get_remaining_space_x(pacman_x) == 0:
@@ -75,6 +80,9 @@ def can_move_up(pacman_x, pacman_y):
     (pacman_row, pacman_col) = get_row_col(pacman_x, pacman_y)
     if pacman_row == 0:
         return False
+    # samo skreni okomito kad smo poravnati po sirini
+    if get_remaining_space_x(pacman_x) != 0:
+        return False
     if level[pacman_row - 1][pacman_col] == 1:
         if get_remaining_space_y(pacman_y) == 0:
             return False
@@ -83,6 +91,8 @@ def can_move_up(pacman_x, pacman_y):
 def can_move_down(pacman_x, pacman_y):
     (pacman_row, pacman_col) = get_row_col(pacman_x, pacman_y)
     if pacman_row == 14:
+        return False
+    if get_remaining_space_x(pacman_x) != 0:
         return False
     if level[pacman_row + 1][pacman_col] == 1:
         if get_remaining_space_y(pacman_y) == 0:
