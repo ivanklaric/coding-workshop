@@ -13,7 +13,12 @@ maze_element = pygame.image.load("img/maze-element.png")
 blank_element = pygame.image.load("img/blank-element.png")
 small_dot = pygame.image.load("img/small-dot.png")
 big_dot = pygame.image.load("img/big-dot.png")
-pacman = pygame.image.load("img/pacman.png")
+pacman = [ pygame.image.load("img/pacman.png"), 
+          pygame.image.load("img/pacman-2.png"), 
+          pygame.image.load("img/pacman-3.png"),
+           pygame.image.load("img/pacman-2.png") ]
+pacman_img = 0
+
 # 0 = prazno polje
 # 1 = zid
 # 2 = mala mrvica
@@ -109,9 +114,7 @@ def can_move_down(pacman_x, pacman_y):
             return False
     return True
 
-def get_debug_info():
-    return "X: " + str(pacman_x) + ", Y:" + str(pacman_y) + ", S_X:" + str(field_begin_x) + ", S_Y:" + str(field_begin_y) + ", (R,C):" + str(get_row_col(pacman_x, pacman_y))
-
+time_since_last_animation = pygame.time.get_ticks()
 running = True
 angle = 0
 score = 0
@@ -134,6 +137,9 @@ while running:
     if (keys_pressed[pygame.K_DOWN] or keys_pressed[pygame.K_s]) and can_move_down(pacman_x, pacman_y):
         angle = 270
         pacman_y += 2
+    if pygame.time.get_ticks() - time_since_last_animation > 150:
+        time_since_last_animation = pygame.time.get_ticks()
+        pacman_img = (pacman_img + 1) % 4
 
 
     screen.fill("BLACK")
@@ -151,7 +157,7 @@ while running:
             if level[r][i] == 3:
                 screen.blit(big_dot, (field_begin_x + 50*i, field_begin_y + 50*r))
 
-    rotated_pacman = pygame.transform.rotate(pacman, angle)
+    rotated_pacman = pygame.transform.rotate(pacman[pacman_img], angle)
     screen.blit(rotated_pacman, (pacman_x, pacman_y))
     (pacman_row, pacman_col) = get_row_col(pacman_x, pacman_y)
     if level[pacman_row][pacman_col] == 2: # naletjeli smo na malu mrvicu
