@@ -7,7 +7,7 @@ pygame.init()
 
 screen = pygame.display.set_mode((768, 1024))
 pygame.display.set_caption("Pacman!")
-font = pygame.font.SysFont("Arial New", 30)
+font = pygame.font.SysFont("Arial New", 24)
 
 maze_element = pygame.image.load("img/maze-element.png")
 blank_element = pygame.image.load("img/blank-element.png")
@@ -22,22 +22,14 @@ pacman = pygame.image.load("img/pacman.png")
 pacman_x = field_begin_x + 7 * 50
 pacman_y = field_begin_y + 11 * 50
 
-def is_level_empty(level):
-    for row in level:
-        for cell in row:
-            if cell == 2:
-                return False
-    return True
-
-def generate_level():
-    return [
+level = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 1],
     [1, 2, 1, 1, 2, 1, 2, 1, 3, 1, 2, 1, 1, 2, 1],
     [1, 2, 1, 1, 2, 1, 2, 2, 3, 1, 2, 1, 1, 2, 1],
     [1, 2, 2, 2, 2, 1, 1, 2, 1, 1, 2, 2, 2, 2, 1],
     [1, 1, 1, 2, 1, 2, 2, 2, 2, 2, 1, 2, 1, 1, 1],
-    [1, 2, 2, 2, 1, 2, 1, 2, 1, 2, 1, 2, 2, 2, 1],
+    [1, 2, 2, 2, 1, 2, 1, 1, 1, 2, 1, 2, 2, 2, 1],
     [1, 2, 1, 2, 2, 2, 1, 2, 1, 2, 2, 2, 1, 2, 1],
     [1, 2, 2, 2, 1, 2, 1, 1, 1, 2, 1, 2, 2, 2, 1],
     [1, 1, 1, 2, 1, 2, 2, 2, 2, 2, 1, 2, 1, 1, 1],
@@ -47,8 +39,6 @@ def generate_level():
     [1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 ]
-
-level = generate_level()
 
 def get_row_col(pacman_x, pacman_y):
     row = int((pacman_y - field_begin_y) // 50)
@@ -112,12 +102,9 @@ def can_move_down(pacman_x, pacman_y):
 running = True
 angle = 0
 score = 0
-<<<<<<< Updated upstream
-=======
 
 x_pomicanje = 0
 y_pomicanje = 0
->>>>>>> Stashed changes
 
 while running:
     for event in pygame.event.get():
@@ -162,11 +149,7 @@ while running:
 
 
     screen.fill("BLACK")
-<<<<<<< Updated upstream
-    text = font.render("Score: " + str(score), True, "WHITE")
-=======
     text = font.render(f'{score = }', True, "WHITE")
->>>>>>> Stashed changes
     screen.blit(text, (10, 10))
 
     for r in range(15):
@@ -183,11 +166,6 @@ while running:
     rotated_pacman = pygame.transform.rotate(pacman, angle)
     screen.blit(rotated_pacman, (pacman_x, pacman_y))
     (pacman_row, pacman_col) = get_row_col(pacman_x, pacman_y)
-    if level[pacman_row][pacman_col] == 2: # naletjeli smo na malu mrvicu
-        level[pacman_row][pacman_col] = 0
-        score = score + 1
-        if is_level_empty(level):
-            level = generate_level()
     pygame.draw.rect(screen, "WHITE", ( field_begin_x + pacman_col * 50, field_begin_y + pacman_row * 50, 50, 50), 2)
     pygame.display.flip()
 
