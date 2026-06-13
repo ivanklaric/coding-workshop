@@ -112,12 +112,9 @@ def can_move_down(pacman_x, pacman_y):
 running = True
 angle = 0
 score = 0
-<<<<<<< Updated upstream
-=======
 
 x_pomicanje = 0
 y_pomicanje = 0
->>>>>>> Stashed changes
 
 while running:
     for event in pygame.event.get():
@@ -162,11 +159,7 @@ while running:
 
 
     screen.fill("BLACK")
-<<<<<<< Updated upstream
     text = font.render("Score: " + str(score), True, "WHITE")
-=======
-    text = font.render(f'{score = }', True, "WHITE")
->>>>>>> Stashed changes
     screen.blit(text, (10, 10))
 
     for r in range(15):
